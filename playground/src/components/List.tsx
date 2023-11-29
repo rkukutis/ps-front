@@ -1,11 +1,6 @@
 import { useState } from "react";
 import getQuotes from "../services/getQuotes";
 
-interface CatFact {
-  fact: string;
-  length: number;
-}
-
 export default function List() {
   const [quote, setQuote] = useState("");
 
