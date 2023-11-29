@@ -1,22 +1,19 @@
-type ThingieProps = {
-  thingies: string[];
-};
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-const stuff: string[] = ["Hello", "There", "Heh"];
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <>
-      <h1 className="text text-red-600 text-center py-8 font-extrabold">
-        BRUH
-      </h1>
-      <ThingieDisplay thingies={stuff} />
-    </>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </BrowserRouter>
+    </QueryClientProvider>
   );
-}
-
-function ThingieDisplay({ thingies }: ThingieProps) {
-  return thingies.map((t) => <h2>{t}</h2>);
 }
 
 export default App;
