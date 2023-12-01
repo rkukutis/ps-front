@@ -1,3 +1,4 @@
+/*
 interface CatFact {
   fact: string;
   length: number;
@@ -8,3 +9,4 @@ export default async function getQuotes(): Promise<string> {
   const data: CatFact = await res.json();
   return data.fact;
 }
+*/

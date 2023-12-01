@@ -1,3 +1,5 @@
+/*
+
 interface LoginDetails {
   username: string;
   password: string;
@@ -8,3 +10,4 @@ export default async function ({ username, password }: LoginDetails) {
   const data = await res.json();
   // return logged in user data
 }
+*/

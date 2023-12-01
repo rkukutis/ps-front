@@ -1,3 +1,4 @@
+/*
 interface Post {
   title: string;
   author: string;
@@ -18,3 +19,4 @@ export default async function createPost(post: Post) {
   const data = await res.json();
   // Do something with data (hottoast message?)
 }
+*/

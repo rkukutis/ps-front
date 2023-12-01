@@ -1,3 +1,4 @@
+/*
 import getQuotes from "../services/getQuotes";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
@@ -18,3 +19,4 @@ export default function List() {
     </div>
   );
 }
+*/
