@@ -1,3 +1,9 @@
+import Testing from "../components/Testing";
+
 export default function Blog() {
-  return <h1>BLOG</h1>;
+  return (
+    <div>
+      <Testing />
+    </div>
+  );
 }

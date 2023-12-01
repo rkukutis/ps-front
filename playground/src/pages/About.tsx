@@ -1,3 +1,9 @@
+import Testing from "../components/Testing";
+
 export default function About() {
-  return <h1>ABOUT</h1>;
+  return (
+    <div>
+      <Testing />
+    </div>
+  );
 }
