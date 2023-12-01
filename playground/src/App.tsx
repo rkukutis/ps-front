@@ -7,6 +7,7 @@ import PageLayout from "./components/PageLayout";
 import About from "./pages/About";
 import Blog from "./pages/Blog";
 import Contacts from "./pages/Contacts";
+import PageNotFound from "./pages/PageNotFound";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ function App() {
             <Route path="/blog" element={<Blog />} />
             <Route path="/contacts" element={<Contacts />} />
           </Route>
+          <Route path="/*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />
