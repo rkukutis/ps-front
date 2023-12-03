@@ -5,8 +5,8 @@ interface ButtonProps {
 }
 
 const styles = {
-  normal: "bg-blue-500 px-5 py-2 rounded-md text-slate-800 hover:bg-blue-300",
-  danger: "bg-red-500 px-5 py-2 rounded-md text-slate-800 hover:bg-red-300"
+  normal: "bg-blue-500 px-5 py-2 rounded-md text-slate-100 hover:bg-blue-300",
+  danger: "bg-red-500 px-5 py-2 rounded-md text-red-100 hover:bg-red-300"
 };
 
 export default function Button({ children, type = styles.normal, onclick }: ButtonProps) {

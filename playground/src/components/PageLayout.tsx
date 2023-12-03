@@ -11,7 +11,7 @@ export default function PageLayout() {
         <NavigationBar />
         <Button onclick={() => navigate("/not-implemented")}>Log in</Button>
       </header>
-      <main className="h-screen">
+      <main className="min-h-screen">
         <Outlet />
       </main>
       <footer className="bg-slate-800 py-9 text-slate-100 flex flex-col items-center">
