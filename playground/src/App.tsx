@@ -8,6 +8,7 @@ import About from "./pages/About";
 import Blog from "./pages/Blog";
 import Contacts from "./pages/Contacts";
 import PageNotFound from "./pages/PageNotFound";
+import Login from "./pages/Login";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/contacts" element={<Contacts />} />
+            <Route path="/login" element={<Login />} />
           </Route>
           <Route path="/*" element={<PageNotFound />} />
         </Routes>

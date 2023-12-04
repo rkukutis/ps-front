@@ -1,22 +1,22 @@
-/*
 interface Post {
   title: string;
-  author: string;
-  date: string;
   body: string;
 }
 
 export default async function createPost(post: Post) {
-  const res = await fetch("API POST PUT ENDPOINT", {
+  const user = localStorage.getItem("user");
+  if (!user) return;
+  const { state } = JSON.parse(user);
+  const res = await fetch("https://rhoopoe.com/api/posts", {
     method: "POST",
     mode: "cors",
-    credentials: "include",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${state.password}`
     },
     body: JSON.stringify(post)
   });
   const data = await res.json();
+  console.log(data);
   // Do something with data (hottoast message?)
 }
-*/
