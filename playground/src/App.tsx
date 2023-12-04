@@ -9,12 +9,27 @@ import Blog from "./pages/Blog";
 import Contacts from "./pages/Contacts";
 import PageNotFound from "./pages/PageNotFound";
 import Login from "./pages/Login";
+import { Toaster } from "react-hot-toast";
 
 const queryClient = new QueryClient();
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      <Toaster
+        position="top-center"
+        gutter={12}
+        containerStyle={{ margin: "8px" }}
+        toastOptions={{
+          success: { duration: 3000 },
+          error: { duration: 5000 },
+          style: {
+            fontSize: "16px",
+            maxWidth: "500px",
+            padding: "16px 24px"
+          }
+        }}
+      />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<PageLayout />}>

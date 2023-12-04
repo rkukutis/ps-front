@@ -1,4 +1,4 @@
-export async function deletePost(postId: string): Promise<boolean> {
+export async function deletePost(postId: string) {
   const user = localStorage.getItem("user");
   if (!user) return false;
   const { state } = JSON.parse(user);
@@ -10,9 +10,7 @@ export async function deletePost(postId: string): Promise<boolean> {
       Authorization: `Bearer ${state.password}`
     }
   });
-  if (res.status === 204) {
-    return true;
-  } else {
-    return false;
+  if (res.status !== 200) {
+    throw new Error("Could not delete message");
   }
 }

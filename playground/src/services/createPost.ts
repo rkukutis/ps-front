@@ -16,7 +16,7 @@ export default async function createPost(post: Post) {
     },
     body: JSON.stringify(post)
   });
-  const data = await res.json();
-  console.log(data);
-  // Do something with data (hottoast message?)
+  if (res.status !== 201) {
+    throw new Error("Could not create new Post");
+  }
 }
