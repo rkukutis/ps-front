@@ -3,6 +3,8 @@ import { useUserStore } from "../../stores/userStore";
 import { deletePost } from "../../services/deletePost";
 import Button from "../Button";
 import toast from "react-hot-toast";
+import { useState } from "react";
+import PostForm from "./PostForm";
 
 export interface Post {
   uuid: string;
@@ -13,6 +15,7 @@ export interface Post {
 }
 
 export function BlogPost({ post }: { post: Post }) {
+  const [isEditing, setIsEditing] = useState(false);
   const queryClient = useQueryClient();
   const { username } = useUserStore();
   const mutation = useMutation({
@@ -34,14 +37,24 @@ export function BlogPost({ post }: { post: Post }) {
         <p>{post.createdAt}</p>
       </div>
       {username && (
-        <div className="col-span-2 flex w-full justify-center space-x-2 pt-3">
-          <Button extraStyle="w-full" onclick={() => mutation.mutate(post.uuid)} type="danger">
-            Delete
-          </Button>
-          <Button extraStyle="w-full" onclick={() => console.log("update")}>
-            Update
-          </Button>
-        </div>
+        <>
+          <div className="col-span-2 flex w-full justify-center space-x-2 pt-3">
+            <Button extraStyle="w-full" onclick={() => mutation.mutate(post.uuid)} type="danger">
+              Delete
+            </Button>
+            <Button type={isEditing ? "danger" : "normal"} extraStyle="w-full" onclick={() => setIsEditing(!isEditing)}>
+              {isEditing ? "Cancel" : "Update"}
+            </Button>
+          </div>
+          {isEditing && (
+            <PostForm
+              postId={post.uuid}
+              method="PUT"
+              initialFieldValues={{ title: post.title, body: post.body }}
+              closeForm={() => setIsEditing(!isEditing)}
+            />
+          )}
+        </>
       )}
     </div>
   );

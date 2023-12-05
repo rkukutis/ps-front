@@ -1,4 +1,5 @@
 import { Post } from "../components/blog-feature/BlogPost";
+import { Pagination } from "../pages/Blog";
 
 export interface GetPostsResponse {
   content: Post[];
@@ -6,22 +7,14 @@ export interface GetPostsResponse {
   totalElements: number;
 }
 
-interface PaginationSettings {
-  page: number;
-  limit: number;
-  sortBy: string;
-  sortDesc: boolean;
-  contains?: string;
-}
-
 export default async function getPosts({
   page = 1,
   limit = 10,
   sortBy = "createdAt",
-  sortDesc = true,
+  sortDesc = "true",
   contains
-}: PaginationSettings): Promise<GetPostsResponse> {
-  const titleFilter = contains ? `contains=${contains}` : "";
+}: Pagination): Promise<GetPostsResponse> {
+  const titleFilter = contains ? `&contains=${contains}` : "";
   const res = await fetch(`https://rhoopoe.com/api/posts?limit=${limit}&page=${page}&sortBy=${sortBy}&sortDesc=${sortDesc}${titleFilter}`, {
     method: "GET", // *GET, POST, PUT, DELETE, etc.
     mode: "cors", // no-cors, *cors, same-origin
