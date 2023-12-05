@@ -13,7 +13,11 @@ export default async function getPosts({
   sortBy = "createdAt",
   sortDesc = "true",
   contains
-}: Pagination): Promise<GetPostsResponse> {
+}: Pagination): Promise<GetPostsResponse | null> {
+  const user = localStorage.getItem("user");
+  if (!user) return null;
+  const { state } = JSON.parse(user);
+  console.log(state);
   const titleFilter = contains ? `&contains=${contains}` : "";
   const res = await fetch(`https://rhoopoe.com/api/posts?limit=${limit}&page=${page}&sortBy=${sortBy}&sortDesc=${sortDesc}${titleFilter}`, {
     method: "GET", // *GET, POST, PUT, DELETE, etc.
@@ -22,7 +26,7 @@ export default async function getPosts({
     credentials: "same-origin", // include, *same-origin, omit
     headers: {
       "Content-Type": "application/json",
-      Authorization: "Bearer ateitiesprofesionalai"
+      Authorization: `Bearer ${state.password}`
     },
     redirect: "follow", // manual, *follow, error
     referrerPolicy: "no-referrer"

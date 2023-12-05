@@ -18,16 +18,26 @@ export default function Blog() {
     sortDesc: "true"
   });
 
+  const user = localStorage.getItem("user");
+  if (!user) return;
+  const { state } = JSON.parse(user);
+
   return (
-    <div className="grid grid-cols-12">
-      {/* <Testing /> */}
-      {/* <PostForm /> */}
-      <div className="col-span-3 flex justify-end">
-        <PaginationSettings setPagination={setPagination} pagination={pagination} />
-      </div>
-      <div className="col-span-8">
-        <BlogPostContainer pagination={pagination} />
-      </div>
-    </div>
+    <>
+      {state.password ? (
+        <div className="grid grid-cols-12">
+          {/* <Testing /> */}
+          {/* <PostForm /> */}
+          <div className="col-span-3 flex justify-end">
+            <PaginationSettings setPagination={setPagination} pagination={pagination} />
+          </div>
+          <div className="col-span-8">
+            <BlogPostContainer pagination={pagination} />
+          </div>
+        </div>
+      ) : (
+        <h1>Only logged in users can currently access the blog.</h1>
+      )}
+    </>
   );
 }
