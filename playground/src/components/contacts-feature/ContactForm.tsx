@@ -17,7 +17,7 @@ function ContactForm() {
     handleSubmit,
     formState: { errors }
   } = useForm<FormValues>({ mode: "all" });
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
+  const onSubmit: SubmitHandler<FormValues> = () => {
     toast.success("Message sent");
     // SERVICE TO BACKEND
   };

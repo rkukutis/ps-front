@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import BlogPostContainer from "../components/blog-feature/BlogPostContainer";
 import PaginationSettings from "../components/blog-feature/PaginationSettings";
-import { URLSearchParamsInit, useSearchParams } from "react-router-dom";
+// import { URLSearchParamsInit, useSearchParams } from "react-router-dom";
 
 export interface Pagination {
   page: number;
@@ -20,7 +20,7 @@ const defaultPagination: Pagination = {
 
 export default function Blog() {
   const [pagination, setPagination] = useState(defaultPagination);
-  const [searchParams, setSearchParams] = useSearchParams();
+  // const [searchParams, setSearchParams] = useSearchParams();
 
   // useEffect(
   //   function () {

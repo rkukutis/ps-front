@@ -37,7 +37,7 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col items-center h-[75vh] justify-center">
+    <div className="flex flex-col items-center h-[80vh] justify-center">
       <form className="bg-slate-200 py-6 px-4 w-[30rem] flex flex-col space-y-4 rounded-md" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col space-y-1">
           <label>Username</label>
