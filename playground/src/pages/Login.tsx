@@ -37,7 +37,7 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col items-center h-[80vh] justify-center">
+    <div className="flex flex-col items-center justify-center h-[85vh]">
       <form className="bg-slate-200 py-6 px-4 w-[30rem] flex flex-col space-y-4 rounded-md" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col space-y-1">
           <label>Username</label>
@@ -49,7 +49,7 @@ export default function Login() {
           <input type="password" className="w-full p-1" {...register("password", { required: true })} />
           {errors.password && <ErrorLabel message="password is required" />}
         </div>
-        <input className="bg-blue-500 py-1 w-full hover:curs rounded-md text-slate-100" type="submit"></input>
+        <input value="Log in" className="bg-blue-500 py-1 w-full hover:curs rounded-md text-slate-100" type="submit"></input>
       </form>
     </div>
   );

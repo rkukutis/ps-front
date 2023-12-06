@@ -1,6 +1,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import FormInlineError from "../FormInlineError";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 type FormValues = {
   name: string;
@@ -12,6 +13,8 @@ const invalidFieldStyle = "text-red-500 border-red-500 border-2 rounded-md py-1 
 const defaultFieldStyle = "border-slate-300 border-2 rounded-md py-1 px-2 placeholder:text-slate-400";
 
 function ContactForm() {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -19,6 +22,7 @@ function ContactForm() {
   } = useForm<FormValues>({ mode: "all" });
   const onSubmit: SubmitHandler<FormValues> = () => {
     toast.success("Message sent");
+    navigate("/home");
     // SERVICE TO BACKEND
   };
 
@@ -31,8 +35,7 @@ function ContactForm() {
             placeholder="Name"
             {...register("name", {
               required: "Name field can not be empty",
-              maxLength: { value: 20, message: "Your name is too long! (>20)" },
-              pattern: { value: /^[A-Za-z]+$/i, message: "Illegal characters in name. Remove all spaces" }
+              maxLength: { value: 20, message: "Your name is too long! (>20)" }
             })}
           />
           {errors.name?.message && <FormInlineError message={errors.name.message} />}
@@ -55,8 +58,7 @@ function ContactForm() {
             placeholder="Message"
             {...register("message", {
               required: "Message field can not be empty",
-              maxLength: { value: 200, message: "Your message is too long! (>200)" },
-              pattern: { value: /^[A-Za-z]+$/i, message: "Illegal characters in message" }
+              maxLength: { value: 200, message: "Your message is too long! (>200)" }
             })}
           />
           {errors.message?.message && <FormInlineError message={errors.message.message} />}

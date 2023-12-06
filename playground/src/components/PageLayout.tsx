@@ -14,7 +14,7 @@ export default function PageLayout() {
 
   return (
     <>
-      <header className="py-9 bg-blue-400 flex justify-between px-4 items-center">
+      <header className="py-9 bg-blue-400 flex justify-between px-4 items-center h-[10vh]">
         <NavigationBar />
         {username ? (
           <div className="flex items-center space-x-3">
@@ -25,10 +25,10 @@ export default function PageLayout() {
           <Button onclick={() => navigate("/login")}>Log in</Button>
         )}
       </header>
-      <main>
+      <main className="min-h-[85vh]">
         <Outlet />
       </main>
-      <footer className="bg-slate-800 py-9 text-slate-100 flex flex-col items-center">
+      <footer className="bg-slate-800 py-1 text-slate-100 flex flex-col items-center justify-center h-[5vh]">
         <p>😂 This site is built for learning purposes 😂</p>
       </footer>
     </>

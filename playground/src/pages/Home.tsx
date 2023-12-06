@@ -2,7 +2,7 @@ import cat from "../assets/cat.jpg";
 
 export default function Home() {
   return (
-    <section className=" bg-slate-200 min-h-[80vh] flex flex-col justify-center">
+    <section className=" bg-slate-200 flex flex-col justify-center h-[85vh]">
       <div className="flex items-center flex-col space-y-2">
         <h1>Welcome to my website!</h1>
         <h3>There's nothing here yet, but have a picture of this cute kitty :)</h3>

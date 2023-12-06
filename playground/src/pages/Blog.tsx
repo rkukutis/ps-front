@@ -45,7 +45,7 @@ export default function Blog() {
   return (
     <>
       {state.password ? (
-        <div className="grid grid-cols-12 min-h-[80vh]">
+        <div className="grid grid-cols-12">
           <div className="col-span-3 flex justify-end">
             <PaginationSettings setPagination={setPagination} pagination={pagination} />
           </div>
@@ -54,7 +54,7 @@ export default function Blog() {
           </div>
         </div>
       ) : (
-        <h1 className="min-h-[80vh] bg-slate-50 flex flex-col justify-center items-center text-4xl">
+        <h1 className=" bg-slate-50 flex flex-col justify-center items-center text-4xl h-[85vh]">
           🛑 Only logged in users can currently access the blog. 🛑
         </h1>
       )}
