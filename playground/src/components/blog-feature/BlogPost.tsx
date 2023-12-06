@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useUserStore } from "../../stores/userStore";
-import { deletePost } from "../../services/deletePost";
+import { deletePost } from "../../services/posts-api/deletePost";
 import Button from "../Button";
 import toast from "react-hot-toast";
 import { useState } from "react";

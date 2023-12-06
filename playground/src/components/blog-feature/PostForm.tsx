@@ -1,14 +1,11 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import createPost from "../../services/createPost";
+import createPost from "../../services/posts-api/createPost";
 import toast from "react-hot-toast";
-import updatePost from "../../services/updatePost";
+import updatePost from "../../services/posts-api/updatePost";
+import FormInlineError from "../FormInlineError";
 
 type Post = { title: string; body: string };
-
-function ErrorLabel({ message }: { message: string }) {
-  return <span className="bg-red-100 w-full mt-2 p-1 text-red-500 text-center">{message}</span>;
-}
 
 interface Props {
   closeForm: () => void;
@@ -37,7 +34,6 @@ export default function PostForm({ closeForm, initialFieldValues, method = "POST
     mutationFn: (updatedPost: { title: string; body: string; uuid: string }) => updatePost(updatedPost),
     onError: (err) => toast.error(err.message),
     onSuccess: () => {
-      // closeForm();
       toast.success("Post updated successfully!");
       queryClient.invalidateQueries();
     }
@@ -57,12 +53,12 @@ export default function PostForm({ closeForm, initialFieldValues, method = "POST
         <div className="flex flex-col">
           <label>Post title</label>
           <textarea defaultValue={initialFieldValues?.title} className="w-full" {...register("title", { required: true })} />
-          {errors.title && <ErrorLabel message="post title is required" />}
+          {errors.title && <FormInlineError message="post title is required" />}
         </div>
         <div className="flex flex-col">
           <label>Post Body</label>
           <textarea wrap="physical" className="w-full" {...register("body", { required: true })} defaultValue={initialFieldValues?.body} />
-          {errors.body && <ErrorLabel message="post body is required" />}
+          {errors.body && <FormInlineError message="post body is required" />}
         </div>
         <input className="bg-blue-500 py-1 w-full hover:curs rounded-md text-slate-100" type="submit" />
       </form>

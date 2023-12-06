@@ -1,5 +1,5 @@
-import { Post } from "../components/blog-feature/BlogPost";
-import { Pagination } from "../pages/Blog";
+import { Post } from "../../components/blog-feature/BlogPost";
+import { Pagination } from "../../pages/Blog";
 
 export interface GetPostsResponse {
   content: Post[];
@@ -17,7 +17,6 @@ export default async function getPosts({
   const user = localStorage.getItem("user");
   if (!user) return null;
   const { state } = JSON.parse(user);
-  console.log(state);
   const titleFilter = contains ? `&contains=${contains}` : "";
   const res = await fetch(`https://rhoopoe.com/api/posts?limit=${limit}&page=${page}&sortBy=${sortBy}&sortDesc=${sortDesc}${titleFilter}`, {
     method: "GET", // *GET, POST, PUT, DELETE, etc.

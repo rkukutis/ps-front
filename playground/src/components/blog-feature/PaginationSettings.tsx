@@ -9,7 +9,6 @@ interface Props {
 const selectStyle = "bg-slate-50 border rounded-md px-2 py-1";
 
 function PaginationSettings({ pagination, setPagination }: Props) {
-  console.log(pagination);
   return (
     <div className="fixed py-2 mt-3 bg-slate-50 px-4 rounded-md border-slate-200 border">
       <div className="flex space-x-3 items-center">

@@ -25,7 +25,7 @@ export default function PageLayout() {
           <Button onclick={() => navigate("/login")}>Log in</Button>
         )}
       </header>
-      <main className="min-h-screen">
+      <main>
         <Outlet />
       </main>
       <footer className="bg-slate-800 py-9 text-slate-100 flex flex-col items-center">

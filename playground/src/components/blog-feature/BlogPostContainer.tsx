@@ -6,7 +6,7 @@ import { BlogPost, Post } from "./BlogPost";
 import { Pagination } from "../../pages/Blog";
 import PostForm from "./PostForm";
 import Button from "../Button";
-import getPosts from "../../services/getPosts";
+import getPosts from "../../services/posts-api/getPosts";
 import NoMorePosts from "./NoMorePosts";
 
 export default function BlogPostContainer({ pagination }: { pagination: Pagination }) {
