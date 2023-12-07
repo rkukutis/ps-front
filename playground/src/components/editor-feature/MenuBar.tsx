@@ -1,9 +1,15 @@
 import { useCurrentEditor } from "@tiptap/react";
-import { useCallback } from "react";
 
 export default function MenuBar() {
   const { editor } = useCurrentEditor();
   type Level = 1 | 2 | 3 | 4 | 5 | 6;
+  function numberToLevel(num: number): Level {
+    if (num > 0 && num < 7) {
+      return num as Level;
+    } else {
+      return 1;
+    }
+  }
 
   const baseStyle = "p-5 bg-slate-100 rounded-md border-2 border-slate-200";
   const selectedStyle = "p-5 bg-blue-500 rounded-md border-2 border-blue-600";
@@ -60,7 +66,7 @@ export default function MenuBar() {
         paragraph
       </button>
       {/* /// HEADERS */}
-      <select onChange={(e) => setHeaderLevel(Number(e.target.value))}>
+      <select onChange={(e) => setHeaderLevel(numberToLevel(Number(e.target.value)))}>
         <option value={1}>Header 1</option>
         <option value={2}>Header 2</option>
         <option value={3}>Header 3</option>
