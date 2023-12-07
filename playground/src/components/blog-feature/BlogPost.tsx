@@ -32,7 +32,12 @@ export function BlogPost({ post }: { post: Post }) {
       <div className="col-span-10 px-2">
         <p>{post.uuid}</p>
         <p>{post.title}</p>
-        <p className="whitespace-pre-wrap">{post.body}</p>
+        {/* <p className="whitespace-pre-wrap">{post.body}</p> */}
+        <div
+          className="prose prose-sm sm:prose lg:prose-lg xl:prose-2xl mx-auto focus:outline-none"
+          dangerouslySetInnerHTML={{ __html: post.body }}
+          // TODO: this is very unsecure, change to a safer options
+        />
         <p>{post.imageUrl}</p>
         <p>{post.createdAt}</p>
       </div>

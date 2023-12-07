@@ -38,26 +38,14 @@ export default function Blog() {
   //   [pagination.page, pagination.limit, pagination.sortBy, pagination.sortDesc, pagination.contains, setSearchParams]
   // );
 
-  const user = localStorage.getItem("user");
-  if (!user) return;
-  const { state } = JSON.parse(user);
-
   return (
-    <>
-      {state.password ? (
-        <div className="grid grid-cols-12">
-          <div className="col-span-3 flex justify-end">
-            <PaginationSettings setPagination={setPagination} pagination={pagination} />
-          </div>
-          <div className="col-span-8">
-            <BlogPostContainer pagination={pagination} />
-          </div>
-        </div>
-      ) : (
-        <h1 className=" bg-slate-50 flex flex-col justify-center items-center text-4xl h-[85vh]">
-          🛑 Only logged in users can currently access the blog. 🛑
-        </h1>
-      )}
-    </>
+    <div className="grid grid-cols-12">
+      <div className="col-span-3 flex justify-end">
+        <PaginationSettings setPagination={setPagination} pagination={pagination} />
+      </div>
+      <div className="col-span-8">
+        <BlogPostContainer pagination={pagination} />
+      </div>
+    </div>
   );
 }
