@@ -39,11 +39,11 @@ export default function Blog() {
   // );
 
   return (
-    <div className="grid grid-cols-12">
-      <div className="col-span-3 flex justify-end">
+    <div className="lg:grid grid-cols-12 flex flex-col">
+      <div className="flex items-center justify-center lg:items-start lg:justify-end lg:col-span-3 ">
         <PaginationSettings setPagination={setPagination} pagination={pagination} />
       </div>
-      <div className="col-span-8">
+      <div className="lg:col-span-6">
         <BlogPostContainer pagination={pagination} />
       </div>
     </div>

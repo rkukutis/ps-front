@@ -24,10 +24,10 @@ export default function BlogPostContainer({ pagination }: { pagination: Paginati
       {isFetching ? (
         <ClipLoader size={150} cssOverride={{ margin: "30vh" }} aria-label="Loading Spinner" data-testid="loader" />
       ) : (
-        <div className="flex flex-col items-center">
+        <div className="w-full mt-3">
           {username && (
-            <div className="pt-3 flex flex-col space-y-3 w-full">
-              <Button type={postForm ? "danger" : "normal"} onclick={() => setPostForm(!postForm)}>
+            <div className="">
+              <Button extraStyle="w-full" type={postForm ? "danger" : "normal"} onclick={() => setPostForm(!postForm)}>
                 {postForm ? "Cancel" : "Create a new Post"}
               </Button>
               {postForm && <PostForm closeForm={() => setPostForm(false)} />}

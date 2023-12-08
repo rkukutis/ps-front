@@ -1,7 +1,18 @@
-import { useCurrentEditor } from "@tiptap/react";
+import { Editor } from "@tiptap/react";
+import boldIcon from "../../assets/editor-icons/format_bold_FILL0_wght400_GRAD0_opsz24.svg";
+import italicIcon from "../../assets/editor-icons/format_italic_FILL0_wght400_GRAD0_opsz24.svg";
+import strikeIcon from "../../assets/editor-icons/strikethrough_s_FILL0_wght400_GRAD0_opsz24.svg";
+import underlineIcon from "../../assets/editor-icons/format_underlined_FILL0_wght400_GRAD0_opsz24.svg";
+import codeIcon from "../../assets/editor-icons/code_FILL0_wght400_GRAD0_opsz24.svg";
+import bulletListIcon from "../../assets/editor-icons/list_FILL0_wght400_GRAD0_opsz24.svg";
+import numberedListIcon from "../../assets/editor-icons/format_list_numbered_rtl_FILL0_wght400_GRAD0_opsz24.svg";
+import quoteIcon from "../../assets/editor-icons/format_quote_FILL0_wght400_GRAD0_opsz24.svg";
+import horizontalRuleIcon from "../../assets/editor-icons/horizontal_rule_FILL0_wght400_GRAD0_opsz24.svg";
+import undoIcon from "../../assets/editor-icons/undo_FILL0_wght400_GRAD0_opsz24.svg";
+import redoIcon from "../../assets/editor-icons/redo_FILL0_wght400_GRAD0_opsz24.svg";
+import imageIcon from "../../assets/editor-icons/image_FILL0_wght400_GRAD0_opsz24.svg";
 
-export default function MenuBar() {
-  const { editor } = useCurrentEditor();
+export default function MenuBar({ editor }: { editor: Editor | null }) {
   type Level = 1 | 2 | 3 | 4 | 5 | 6;
   function numberToLevel(num: number): Level {
     if (num > 0 && num < 7) {
@@ -11,8 +22,8 @@ export default function MenuBar() {
     }
   }
 
-  const baseStyle = "p-5 bg-slate-100 rounded-md border-2 border-slate-200";
-  const selectedStyle = "p-5 bg-blue-500 rounded-md border-2 border-blue-600";
+  const baseStyle = "p-2";
+  const selectedStyle = "p-2 bg-blue-400 rounded-md";
 
   if (!editor) {
     return null;
@@ -31,42 +42,39 @@ export default function MenuBar() {
   }
 
   return (
-    <div className="flex flex-wrap items-center justify-center space-x-4">
+    <div className="flex flex-wrap items-center justify-center border-2 rounded-md w-full">
       <button
         onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={!editor.can().chain().focus().toggleBold().run()}
         className={editor.isActive("bold") ? selectedStyle : baseStyle}
       >
-        bold
+        <img src={boldIcon} />
+      </button>
+      <button
+        onClick={() => editor.chain().focus().toggleUnderline().run()}
+        disabled={!editor.can().chain().focus().toggleUnderline().run()}
+        className={editor.isActive("underline") ? selectedStyle : baseStyle}
+      >
+        <img src={underlineIcon} />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleItalic().run()}
         disabled={!editor.can().chain().focus().toggleItalic().run()}
         className={editor.isActive("italic") ? selectedStyle : baseStyle}
       >
-        italic
+        <img src={italicIcon} />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleStrike().run()}
         disabled={!editor.can().chain().focus().toggleStrike().run()}
         className={editor.isActive("strike") ? selectedStyle : baseStyle}
       >
-        strike
+        <img src={strikeIcon} />
       </button>
-      <button
-        onClick={() => editor.chain().focus().toggleCode().run()}
-        disabled={!editor.can().chain().focus().toggleCode().run()}
-        className={editor.isActive("code") ? selectedStyle : baseStyle}
-      >
-        code
-      </button>
-      <button onClick={() => editor.chain().focus().unsetAllMarks().run()}>clear marks</button>
-      <button onClick={() => editor.chain().focus().clearNodes().run()}>clear nodes</button>
       <button onClick={() => editor.chain().focus().setParagraph().run()} className={editor.isActive("paragraph") ? selectedStyle : baseStyle}>
-        paragraph
+        <b>{"<p>"}</b>
       </button>
-      {/* /// HEADERS */}
-      <select onChange={(e) => setHeaderLevel(numberToLevel(Number(e.target.value)))}>
+      <select className="px-2 py-2 mx-3" onChange={(e) => setHeaderLevel(numberToLevel(Number(e.target.value)))}>
         <option value={1}>Header 1</option>
         <option value={2}>Header 2</option>
         <option value={3}>Header 3</option>
@@ -74,70 +82,37 @@ export default function MenuBar() {
         <option value={5}>Header 5</option>
         <option value={6}>Header 6</option>
       </select>
-      {/* <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-        className={editor.isActive("heading", { level: 1 }) ? selectedStyle : baseStyle}
-      >
-        h1
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-        className={editor.isActive("heading", { level: 2 }) ? selectedStyle : baseStyle}
-      >
-        h2
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-        className={editor.isActive("heading", { level: 3 }) ? selectedStyle : baseStyle}
-      >
-        h3
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
-        className={editor.isActive("heading", { level: 4 }) ? selectedStyle : baseStyle}
-      >
-        h4
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
-        className={editor.isActive("heading", { level: 5 }) ? selectedStyle : baseStyle}
-      >
-        h5
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
-        className={editor.isActive("heading", { level: 6 }) ? selectedStyle : baseStyle}
-      >
-        h6
-      </button> */}
-      {/* ///HEADERS */}
       <button onClick={() => editor.chain().focus().toggleBulletList().run()} className={editor.isActive("bulletList") ? selectedStyle : baseStyle}>
-        bullet list
+        <img src={bulletListIcon} />
       </button>
       <button onClick={() => editor.chain().focus().toggleOrderedList().run()} className={editor.isActive("orderedList") ? selectedStyle : baseStyle}>
-        ordered list
+        <img src={numberedListIcon} />
       </button>
       <button onClick={() => editor.chain().focus().toggleCodeBlock().run()} className={editor.isActive("codeBlock") ? selectedStyle : baseStyle}>
-        code block
+        <img src={codeIcon} />
       </button>
       <button onClick={() => editor.chain().focus().toggleBlockquote().run()} className={editor.isActive("blockquote") ? selectedStyle : baseStyle}>
-        blockquote
-      </button>
-      <button onClick={() => editor.chain().focus().setHorizontalRule().run()}>horizontal rule</button>
-      <button onClick={() => editor.chain().focus().setHardBreak().run()}>hard break</button>
-      <button onClick={() => editor.chain().focus().undo().run()} disabled={!editor.can().chain().focus().undo().run()}>
-        undo
-      </button>
-      <button onClick={() => editor.chain().focus().redo().run()} disabled={!editor.can().chain().focus().redo().run()}>
-        redo
+        <img src={quoteIcon} />
       </button>
       <button
-        onClick={() => editor.chain().focus().setColor("#958DF1").run()}
-        className={editor.isActive("textStyle", { color: "#958DF1" }) ? "is-active" : ""}
+        className={editor.isActive("horizontalRule") ? selectedStyle : baseStyle}
+        onClick={() => editor.chain().focus().setHorizontalRule().run()}
       >
-        purple
+        <img src={horizontalRuleIcon} />
       </button>
-      <button onClick={addImage}>Add image</button>
+      <button onClick={() => editor.chain().focus().undo().run()} disabled={!editor.can().chain().focus().undo().run()}>
+        <img src={undoIcon} />
+      </button>
+      <button
+        className={editor.isActive("redo") ? selectedStyle : baseStyle}
+        onClick={() => editor.chain().focus().redo().run()}
+        disabled={!editor.can().chain().focus().redo().run()}
+      >
+        <img src={redoIcon} />
+      </button>
+      <button className={baseStyle} onClick={addImage}>
+        <img src={imageIcon} />
+      </button>
     </div>
   );
 }

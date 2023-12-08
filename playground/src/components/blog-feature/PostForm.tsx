@@ -4,6 +4,14 @@ import createPost from "../../services/posts-api/createPost";
 import toast from "react-hot-toast";
 import updatePost from "../../services/posts-api/updatePost";
 import FormInlineError from "../FormInlineError";
+import { EditorContent, useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import Image from "@tiptap/extension-image";
+import MenuBar from "../editor-feature/MenuBar";
+import { Color } from "@tiptap/extension-color";
+import ListItem from "@tiptap/extension-list-item";
+import TextStyle from "@tiptap/extension-text-style";
+import Underline from "@tiptap/extension-underline";
 
 type Post = { title: string; body: string };
 
@@ -40,27 +48,39 @@ export default function PostForm({ closeForm, initialFieldValues, method = "POST
   });
 
   const onSubmit: SubmitHandler<Post> = (data) => {
+    if (!editor) return;
     if (method === "PUT" && postId !== undefined) {
-      updateMutation.mutate({ title: data.title, body: data.body, uuid: postId });
+      updateMutation.mutate({ title: data.title, body: editor?.getHTML(), uuid: postId });
     } else {
-      postMutation.mutate({ title: data.title, body: data.body });
+      postMutation.mutate({ title: data.title, body: editor.getHTML() });
     }
   };
 
+  const editor = useEditor({
+    extensions: [StarterKit, Image, Underline, TextStyle, Color],
+    content: initialFieldValues?.body || "Start here...",
+    editorProps: {
+      attributes: {
+        class:
+          "prose max-w-none lg:prose-sm xl:prose-lg mx-auto focus:outline-none bg-slate-50 rounded-md p-2 text-sm min-h-[10rem] w-full prose-img:mx-auto"
+      }
+    }
+  });
+
   return (
     <div className="flex flex-col items-center">
-      <form className="bg-slate-200 py-6 px-4 w-full flex flex-col space-y-4 rounded-md" onSubmit={handleSubmit(onSubmit)}>
+      <form className="bg-slate-200 py-6 px-4 w-full flex flex-col space-y-2 rounded-md" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col">
-          <label>Post title</label>
-          <textarea defaultValue={initialFieldValues?.title} className="w-full" {...register("title", { required: true })} />
+          <label>Title</label>
+          <input defaultValue={initialFieldValues?.title} className="w-full p-2 rounded-md" {...register("title", { required: true })} />
           {errors.title && <FormInlineError message="post title is required" />}
         </div>
-        <div className="flex flex-col">
-          <label>Post Body</label>
-          <textarea wrap="physical" className="w-full" {...register("body", { required: true })} defaultValue={initialFieldValues?.body} />
+        <div className="flex flex-col space-y-2">
+          <MenuBar editor={editor} />
+          <EditorContent editor={editor} />
           {errors.body && <FormInlineError message="post body is required" />}
         </div>
-        <input className="bg-blue-500 py-1 w-full hover:curs rounded-md text-slate-100" type="submit" />
+        <input className="w-full bg-blue-500 text-slate-50 py-2 rounded-md" type="submit" value="Submit" />
       </form>
     </div>
   );

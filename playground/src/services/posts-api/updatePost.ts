@@ -17,7 +17,6 @@ export default async function updatePost(post: PostUpdate) {
     },
     body: JSON.stringify(post)
   });
-  console.log(res);
   if (res.status !== 202) {
     throw new Error("Could not update Post");
   }

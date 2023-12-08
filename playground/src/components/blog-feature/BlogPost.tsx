@@ -5,6 +5,8 @@ import Button from "../Button";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import PostForm from "./PostForm";
+import formatDate from "../../utils/formatDate";
+import cleanHTML from "../../utils/cleanHTML";
 
 export interface Post {
   uuid: string;
@@ -28,18 +30,23 @@ export function BlogPost({ post }: { post: Post }) {
   });
 
   return (
-    <div className="bg-slate-100 rounded-md flex flex-col w-full p-2 my-2">
-      <div className="col-span-10 px-2">
-        <p>{post.uuid}</p>
-        <p>{post.title}</p>
+    <div className="bg-slate-100 rounded-md flex flex-col space-y-3 w-full px-8 py-5 my-2">
+      <h1 className="font-bold text-3xl">{post.title}</h1>
+      <div className="flex space-x-4">
+        <img className="h-14 rounded-md" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVWf_XChj3jCS7ZuA3r1ot387qWiKwQGpPpA&usqp=CAU" />
+        <div>
+          <h3>
+            Author: <b>rhoopoe</b>
+          </h3>
+          <h3>Posted: {formatDate(post.createdAt)}</h3>
+        </div>
+      </div>
+      <div className="w-full flex flex-col items-center">
         {/* <p className="whitespace-pre-wrap">{post.body}</p> */}
         <div
-          className="prose prose-sm sm:prose lg:prose-lg xl:prose-2xl mx-auto focus:outline-none"
-          dangerouslySetInnerHTML={{ __html: post.body }}
-          // TODO: this is very unsecure, change to a safer options
+          className="prose max-w-none prose-img:rounded-md lg:prose-lg xl:prose-xl focus:outline-none bg-slate-50 py-4 px-4 rounded-md prose-img:mx-auto"
+          dangerouslySetInnerHTML={{ __html: cleanHTML(post.body) }}
         />
-        <p>{post.imageUrl}</p>
-        <p>{post.createdAt}</p>
       </div>
       {username && (
         <>
