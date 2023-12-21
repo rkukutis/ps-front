@@ -11,9 +11,14 @@ import Contacts from "./pages/Contacts";
 import PageNotFound from "./pages/PageNotFound";
 import Login from "./pages/Login";
 import { Toaster } from "react-hot-toast";
-import ProtectedRoute from "./components/ProtectedRoute";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false
+    }
+  }
+});
 
 function App() {
   return (
@@ -38,9 +43,7 @@ function App() {
             <Route index element={<Navigate to="home" />} />
             <Route path="/home" element={<Home />} />
             <Route path="/about" element={<About />} />
-            <Route path="/blog" element={<ProtectedRoute />}>
-              <Route path="/blog" element={<Blog />} />
-            </Route>
+            <Route path="/blog" element={<Blog />} />
             <Route path="/contacts" element={<Contacts />} />
             <Route path="/login" element={<Login />} />
           </Route>

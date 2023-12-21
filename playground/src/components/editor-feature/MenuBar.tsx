@@ -44,6 +44,7 @@ export default function MenuBar({ editor }: { editor: Editor | null }) {
   return (
     <div className="flex flex-wrap items-center justify-center border-2 rounded-md w-full">
       <button
+        type="button"
         onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={!editor.can().chain().focus().toggleBold().run()}
         className={editor.isActive("bold") ? selectedStyle : baseStyle}
@@ -51,6 +52,7 @@ export default function MenuBar({ editor }: { editor: Editor | null }) {
         <img src={boldIcon} />
       </button>
       <button
+        type="button"
         onClick={() => editor.chain().focus().toggleUnderline().run()}
         disabled={!editor.can().chain().focus().toggleUnderline().run()}
         className={editor.isActive("underline") ? selectedStyle : baseStyle}
@@ -58,6 +60,7 @@ export default function MenuBar({ editor }: { editor: Editor | null }) {
         <img src={underlineIcon} />
       </button>
       <button
+        type="button"
         onClick={() => editor.chain().focus().toggleItalic().run()}
         disabled={!editor.can().chain().focus().toggleItalic().run()}
         className={editor.isActive("italic") ? selectedStyle : baseStyle}
@@ -65,13 +68,18 @@ export default function MenuBar({ editor }: { editor: Editor | null }) {
         <img src={italicIcon} />
       </button>
       <button
+        type="button"
         onClick={() => editor.chain().focus().toggleStrike().run()}
         disabled={!editor.can().chain().focus().toggleStrike().run()}
         className={editor.isActive("strike") ? selectedStyle : baseStyle}
       >
         <img src={strikeIcon} />
       </button>
-      <button onClick={() => editor.chain().focus().setParagraph().run()} className={editor.isActive("paragraph") ? selectedStyle : baseStyle}>
+      <button
+        type="button"
+        onClick={() => editor.chain().focus().setParagraph().run()}
+        className={editor.isActive("paragraph") ? selectedStyle : baseStyle}
+      >
         <b>{"<p>"}</b>
       </button>
       <select className="px-2 py-2 mx-3" onChange={(e) => setHeaderLevel(numberToLevel(Number(e.target.value)))}>
@@ -82,35 +90,53 @@ export default function MenuBar({ editor }: { editor: Editor | null }) {
         <option value={5}>Header 5</option>
         <option value={6}>Header 6</option>
       </select>
-      <button onClick={() => editor.chain().focus().toggleBulletList().run()} className={editor.isActive("bulletList") ? selectedStyle : baseStyle}>
+      <button
+        type="button"
+        onClick={() => editor.chain().focus().toggleBulletList().run()}
+        className={editor.isActive("bulletList") ? selectedStyle : baseStyle}
+      >
         <img src={bulletListIcon} />
       </button>
-      <button onClick={() => editor.chain().focus().toggleOrderedList().run()} className={editor.isActive("orderedList") ? selectedStyle : baseStyle}>
+      <button
+        type="button"
+        onClick={() => editor.chain().focus().toggleOrderedList().run()}
+        className={editor.isActive("orderedList") ? selectedStyle : baseStyle}
+      >
         <img src={numberedListIcon} />
       </button>
-      <button onClick={() => editor.chain().focus().toggleCodeBlock().run()} className={editor.isActive("codeBlock") ? selectedStyle : baseStyle}>
+      <button
+        type="button"
+        onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+        className={editor.isActive("codeBlock") ? selectedStyle : baseStyle}
+      >
         <img src={codeIcon} />
       </button>
-      <button onClick={() => editor.chain().focus().toggleBlockquote().run()} className={editor.isActive("blockquote") ? selectedStyle : baseStyle}>
+      <button
+        type="button"
+        onClick={() => editor.chain().focus().toggleBlockquote().run()}
+        className={editor.isActive("blockquote") ? selectedStyle : baseStyle}
+      >
         <img src={quoteIcon} />
       </button>
       <button
+        type="button"
         className={editor.isActive("horizontalRule") ? selectedStyle : baseStyle}
         onClick={() => editor.chain().focus().setHorizontalRule().run()}
       >
         <img src={horizontalRuleIcon} />
       </button>
-      <button onClick={() => editor.chain().focus().undo().run()} disabled={!editor.can().chain().focus().undo().run()}>
+      <button type="button" onClick={() => editor.chain().focus().undo().run()} disabled={!editor.can().chain().focus().undo().run()}>
         <img src={undoIcon} />
       </button>
       <button
+        type="button"
         className={editor.isActive("redo") ? selectedStyle : baseStyle}
         onClick={() => editor.chain().focus().redo().run()}
         disabled={!editor.can().chain().focus().redo().run()}
       >
         <img src={redoIcon} />
       </button>
-      <button className={baseStyle} onClick={addImage}>
+      <button type="button" className={baseStyle} onClick={addImage}>
         <img src={imageIcon} />
       </button>
     </div>

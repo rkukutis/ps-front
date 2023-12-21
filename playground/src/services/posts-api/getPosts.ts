@@ -1,5 +1,6 @@
 import { Post } from "../../components/blog-feature/BlogPost";
 import { Pagination } from "../../pages/Blog";
+import getTokenFromStorage from "../../utils/getTokenFromStorage";
 
 export interface GetPostsResponse {
   content: Post[];
@@ -14,18 +15,15 @@ export default async function getPosts({
   sortDesc = "true",
   contains
 }: Pagination): Promise<GetPostsResponse | null> {
-  const user = localStorage.getItem("user");
-  if (!user) return null;
-  const { state } = JSON.parse(user);
   const titleFilter = contains ? `&contains=${contains}` : "";
-  const res = await fetch(`https://rhoopoe.com/api/posts?limit=${limit}&page=${page}&sortBy=${sortBy}&sortDesc=${sortDesc}${titleFilter}`, {
+  const res = await fetch(`http://localhost:8080/posts?limit=${limit}&page=${page}&sortBy=${sortBy}&sortDesc=${sortDesc}${titleFilter}`, {
     method: "GET", // *GET, POST, PUT, DELETE, etc.
     mode: "cors", // no-cors, *cors, same-origin
     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
     credentials: "same-origin", // include, *same-origin, omit
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${state.password}`
+      Authorization: `Bearer ${getTokenFromStorage()}`
     },
     redirect: "follow", // manual, *follow, error
     referrerPolicy: "no-referrer"

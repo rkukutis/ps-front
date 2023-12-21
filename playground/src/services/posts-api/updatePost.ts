@@ -1,3 +1,5 @@
+import getTokenFromStorage from "../../utils/getTokenFromStorage";
+
 interface PostUpdate {
   title: string;
   body: string;
@@ -5,15 +7,12 @@ interface PostUpdate {
 }
 
 export default async function updatePost(post: PostUpdate) {
-  const user = localStorage.getItem("user");
-  if (!user) return;
-  const { state } = JSON.parse(user);
-  const res = await fetch(`https://rhoopoe.com/api/posts/${post.uuid}`, {
+  const res = await fetch(`${import.meta.env.VITE_BACKEND_HOST}/posts/${post.uuid}`, {
     method: "PUT",
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${state.password}`
+      Authorization: `Bearer ${getTokenFromStorage()}`
     },
     body: JSON.stringify(post)
   });

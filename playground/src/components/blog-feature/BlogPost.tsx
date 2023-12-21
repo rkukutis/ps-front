@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useUserStore } from "../../stores/userStore";
+import { useUserStore } from "../../stores/tokenStore";
 import { deletePost } from "../../services/posts-api/deletePost";
 import Button from "../Button";
 import toast from "react-hot-toast";
@@ -19,7 +19,7 @@ export interface Post {
 export function BlogPost({ post }: { post: Post }) {
   const [isEditing, setIsEditing] = useState(false);
   const queryClient = useQueryClient();
-  const { username } = useUserStore();
+  const { token } = useUserStore();
   const mutation = useMutation({
     mutationFn: async (postId: string) => await deletePost(postId),
     onError: (err) => toast.error(err.message),
@@ -48,7 +48,7 @@ export function BlogPost({ post }: { post: Post }) {
           dangerouslySetInnerHTML={{ __html: cleanHTML(post.body) }}
         />
       </div>
-      {username && (
+      {token && (
         <>
           <div className="col-span-2 flex w-full justify-center space-x-2 pt-3">
             <Button extraStyle="w-full" onclick={() => mutation.mutate(post.uuid)} type="danger">

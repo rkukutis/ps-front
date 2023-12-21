@@ -1,18 +1,14 @@
 import { Outlet } from "react-router-dom";
+import getTokenFromStorage from "../utils/getTokenFromStorage";
 
 function ProtectedRoute() {
-  const user = localStorage.getItem("user");
-  if (!user) return;
-  const { state } = JSON.parse(user);
-
+  const token = getTokenFromStorage();
   return (
     <>
-      {state.password ? (
+      {token ? (
         <Outlet />
       ) : (
-        <h1 className=" bg-slate-50 flex flex-col justify-center items-center text-4xl h-[85vh]">
-          🛑 Only logged in users can currently access the blog. 🛑
-        </h1>
+        <h1 className=" bg-slate-50 flex flex-col justify-center items-center text-4xl h-[85vh]">🛑 Only logged in users can access this page. 🛑</h1>
       )}
     </>
   );

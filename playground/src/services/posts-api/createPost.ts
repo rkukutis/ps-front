@@ -1,18 +1,17 @@
+import getTokenFromStorage from "../../utils/getTokenFromStorage";
+
 interface Post {
   title: string;
   body: string;
 }
 
 export default async function createPost(post: Post) {
-  const user = localStorage.getItem("user");
-  if (!user) return;
-  const { state } = JSON.parse(user);
-  const res = await fetch("https://rhoopoe.com/api/posts", {
+  const res = await fetch(`${import.meta.env.VITE_BACKEND_HOST}/posts`, {
     method: "POST",
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${state.password}`
+      Authorization: `Bearer ${getTokenFromStorage()}`
     },
     body: JSON.stringify(post)
   });

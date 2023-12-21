@@ -1,7 +1,8 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import login from "../services/login";
-import { useUserStore } from "../stores/userStore";
+import { useUserStore } from "../stores/tokenStore";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 type Inputs = { username: string; password: string };
 
@@ -21,17 +22,18 @@ export default function Login() {
     reset
   } = useForm<Inputs>();
 
-  const { updateUsername, updatePassword } = useUserStore();
+  const { setToken } = useUserStore();
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const res: boolean = await login({ username: data.username, password: data.password });
-    if (res) {
-      updateUsername(data.username);
-      updatePassword(data.password);
+    let loginResponse;
+    try {
+      loginResponse = await login({ username: data.username, password: data.password });
+      setToken(loginResponse);
       navigate("/home");
-    } else {
-      alert("Wrong user details!");
+    } catch (e) {
+      toast.error((e as Error).message);
+    } finally {
       reset();
     }
   };

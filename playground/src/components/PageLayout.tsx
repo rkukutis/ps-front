@@ -1,24 +1,22 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import NavigationBar from "./NavigationBar";
 import Button from "./Button";
-import { useUserStore } from "../stores/userStore";
+import { useUserStore } from "../stores/tokenStore";
 
 export default function PageLayout() {
   const navigate = useNavigate();
-  const { username, updateUsername, updatePassword } = useUserStore();
+  const { token, setToken } = useUserStore();
 
   function logout() {
-    updateUsername("");
-    updatePassword("");
+    setToken("");
   }
 
   return (
     <>
       <header className="py-9 bg-blue-400 flex justify-between px-4 items-center h-[10vh]">
         <NavigationBar />
-        {username ? (
+        {token ? (
           <div className="flex items-center space-x-3">
-            <h3>{username}</h3>
             <Button onclick={logout}>Log out</Button>
           </div>
         ) : (

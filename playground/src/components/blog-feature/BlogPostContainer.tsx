@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useUserStore } from "../../stores/userStore";
+import { useUserStore } from "../../stores/tokenStore";
 import { useState } from "react";
 import { ClipLoader } from "react-spinners";
 import { BlogPost, Post } from "./BlogPost";
@@ -16,7 +16,7 @@ export default function BlogPostContainer({ pagination }: { pagination: Paginati
     queryKey: ["posts", pagination.page, pagination.limit, pagination.sortBy, pagination.sortDesc, pagination.contains],
     queryFn: () => getPosts(pagination)
   });
-  const { username } = useUserStore();
+  const { token } = useUserStore();
   const posts = data?.content;
 
   return (
@@ -25,7 +25,7 @@ export default function BlogPostContainer({ pagination }: { pagination: Paginati
         <ClipLoader size={150} cssOverride={{ margin: "30vh" }} aria-label="Loading Spinner" data-testid="loader" />
       ) : (
         <div className="w-full mt-3">
-          {username && (
+          {token && (
             <div className="">
               <Button extraStyle="w-full" type={postForm ? "danger" : "normal"} onclick={() => setPostForm(!postForm)}>
                 {postForm ? "Cancel" : "Create a new Post"}
