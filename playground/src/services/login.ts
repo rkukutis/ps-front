@@ -8,7 +8,6 @@ interface AuthResponse {
 }
 
 export default async function ({ username, password }: LoginDetails): Promise<string> {
-  console.log(import.meta.env);
   const res = await fetch(`${import.meta.env.VITE_BACKEND_HOST}/auth/login`, {
     method: "POST", // *GET, POST, PUT, DELETE, etc.
     mode: "cors", // no-cors, *cors, same-origin
