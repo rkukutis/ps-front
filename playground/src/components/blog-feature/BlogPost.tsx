@@ -30,7 +30,7 @@ export function BlogPost({ post }: { post: Post }) {
   });
 
   return (
-    <div className="bg-slate-100 rounded-md flex flex-col space-y-3 w-full px-8 py-5 my-2">
+    <div className="bg-slate-100 rounded-md flex flex-col space-y-3 w-full px-8 py-5 mb-2">
       <h1 className="font-bold text-3xl">{post.title}</h1>
       <div className="flex space-x-4">
         <img className="h-14 rounded-md" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVWf_XChj3jCS7ZuA3r1ot387qWiKwQGpPpA&usqp=CAU" />

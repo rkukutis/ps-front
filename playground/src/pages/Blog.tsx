@@ -39,8 +39,8 @@ export default function Blog() {
   // );
 
   return (
-    <div className="lg:grid grid-cols-12 flex flex-col">
-      <div className="flex items-center justify-center lg:items-start lg:justify-end lg:col-span-3 ">
+    <div className="lg:grid grid-cols-12 flex flex-col py-2">
+      <div className="flex items-center justify-center lg:items-start lg:justify-end lg:col-span-3">
         <PaginationSettings setPagination={setPagination} pagination={pagination} />
       </div>
       <div className="lg:col-span-6">

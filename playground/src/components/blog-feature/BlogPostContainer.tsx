@@ -24,7 +24,7 @@ export default function BlogPostContainer({ pagination }: { pagination: Paginati
       {isFetching ? (
         <ClipLoader size={150} cssOverride={{ margin: "30vh" }} aria-label="Loading Spinner" data-testid="loader" />
       ) : (
-        <div className="w-full mt-3">
+        <div className="w-full">
           {token && (
             <div className="">
               <Button extraStyle="w-full" type={postForm ? "danger" : "normal"} onclick={() => setPostForm(!postForm)}>

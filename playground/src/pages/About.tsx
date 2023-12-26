@@ -3,7 +3,7 @@ import potatoSmall from "../assets/potato-small.jpg";
 export default function About() {
   return (
     <div className="flex flex-col justify-center items-center px-6 py-4">
-      <div className="flex flex-col space-y-4 lg:w-1/2 bg-slate-50 rounded-md px-3 border-2 border-slate-100 py-2">
+      <div className="flex flex-col space-y-4 lg:w-1/2 bg-slate-50 rounded-md px-3 border-2 border-slate-100 py-2 lg:text-lg text-slate-800">
         <h1 className="font-bold text-2xl">About me</h1>
         <p className="text-justify">
           My real name is Rick and I am someone who likes to dabble in the fields of webdev, DIY electronics, 3D printing. Although my formal

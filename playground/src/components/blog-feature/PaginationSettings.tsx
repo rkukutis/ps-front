@@ -10,8 +10,8 @@ const selectStyle = "bg-slate-50 border rounded-md px-2 py-1";
 
 function PaginationSettings({ pagination, setPagination }: Props) {
   return (
-    <div className="w-full lg:fixed py-2 mt-3 bg-slate-50 px-4 rounded-md border-slate-200 border lg:w-[20rem]">
-      <div className="flex space-x-3 items-center">
+    <div className="w-full lg:fixed py-2 bg-slate-50 px-4 rounded-md border-slate-200 border lg:w-[15rem] xl:w-[20rem]">
+      <div className="flex space-x-3 items-center justify-center">
         <Button
           onclick={() => {
             if (pagination.page === 1) return;
@@ -20,7 +20,7 @@ function PaginationSettings({ pagination, setPagination }: Props) {
         >
           Back
         </Button>
-        <h1>{pagination.page}</h1>
+        <h1 className="font-bold text-xl">{pagination.page}</h1>
         <Button onclick={() => setPagination({ ...pagination, page: pagination.page + 1 })}>Forward</Button>
       </div>
       <div className="flex flex-col space-y-4 py-4">
