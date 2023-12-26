@@ -1,7 +1,8 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import NavigationBar from "./NavigationBar";
-import Button from "./Button";
 import { useUserStore } from "../stores/tokenStore";
+import Button from "./Button";
+import NavigationBar from "./NavigationBar";
+import githubLogo from "../assets/github-logo.svg";
 
 export default function PageLayout() {
   const navigate = useNavigate();
@@ -27,7 +28,10 @@ export default function PageLayout() {
         <Outlet />
       </main>
       <footer className="bg-slate-800 py-1 text-slate-100 flex flex-col items-center justify-center h-[5vh]">
-        <p>😂 This site is built for learning purposes 😂</p>
+        <a className="flex items-center space-x-3 text-sm" href="https://github.com/rkukutis">
+          <img className="h-4 inline-block" src={githubLogo} />
+          <p>Check out my other stuff</p>
+        </a>
       </footer>
     </>
   );

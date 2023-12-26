@@ -29,8 +29,9 @@ export default function Login() {
     let loginResponse;
     try {
       loginResponse = await login({ username: data.username, password: data.password });
+      toast.success("Login successful");
       setToken(loginResponse);
-      navigate("/home");
+      navigate("/blog");
     } catch (e) {
       toast.error((e as Error).message);
     } finally {
@@ -40,7 +41,7 @@ export default function Login() {
 
   return (
     <div className="flex flex-col items-center justify-center h-[85vh]">
-      <form className="bg-slate-200 py-6 px-4 w-[30rem] flex flex-col space-y-4 rounded-md" onSubmit={handleSubmit(onSubmit)}>
+      <form className="bg-slate-200 py-6 px-4 flex flex-col space-y-4 rounded-md w-4/5 lg:w-1/5" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col space-y-1">
           <label>Username</label>
           <input className="w-full p-1" {...register("username", { required: true })} />
@@ -51,7 +52,7 @@ export default function Login() {
           <input type="password" className="w-full p-1" {...register("password", { required: true })} />
           {errors.password && <ErrorLabel message="password is required" />}
         </div>
-        <input value="Log in" className="bg-blue-500 py-1 w-full hover:curs rounded-md text-slate-100" type="submit"></input>
+        <input value="Log in" className="bg-blue-500 py-1 w-full hover:curs rounded-md text-slate-100 hover:cursor-pointer" type="submit"></input>
       </form>
     </div>
   );

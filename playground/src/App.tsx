@@ -3,7 +3,6 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-import Home from "./pages/Home";
 import PageLayout from "./components/PageLayout";
 import About from "./pages/About";
 import Blog from "./pages/Blog";
@@ -40,8 +39,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<PageLayout />}>
-            <Route index element={<Navigate to="home" />} />
-            <Route path="/home" element={<Home />} />
+            <Route index element={<Navigate to="about" />} />
             <Route path="/about" element={<About />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/contacts" element={<Contacts />} />

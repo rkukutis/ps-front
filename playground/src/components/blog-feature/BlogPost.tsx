@@ -42,7 +42,6 @@ export function BlogPost({ post }: { post: Post }) {
         </div>
       </div>
       <div className="w-full flex flex-col items-center">
-        {/* <p className="whitespace-pre-wrap">{post.body}</p> */}
         <div
           className="prose max-w-none prose-img:rounded-md lg:prose-lg xl:prose-xl focus:outline-none bg-slate-50 py-4 px-4 rounded-md prose-img:mx-auto"
           dangerouslySetInnerHTML={{ __html: cleanHTML(post.body) }}

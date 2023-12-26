@@ -10,9 +10,6 @@ const style = ({ isActive }: ButtonActive) => (isActive ? "text-slate-50" : "tex
 export default function NavigationBar() {
   return (
     <nav className="flex justify-center space-x-6">
-      <NavLink className={style} to="/home">
-        Home
-      </NavLink>
       <NavLink className={style} to="/about">
         About
       </NavLink>
