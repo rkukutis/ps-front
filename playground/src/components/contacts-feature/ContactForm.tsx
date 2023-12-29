@@ -22,7 +22,7 @@ function ContactForm() {
   } = useForm<FormValues>({ mode: "all" });
   const onSubmit: SubmitHandler<FormValues> = () => {
     toast.success("Message sent");
-    navigate("/home");
+    navigate("/blog");
     // SERVICE TO BACKEND
   };
 
