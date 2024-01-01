@@ -10,10 +10,11 @@ import quoteIcon from "../../assets/editor-icons/format_quote_FILL0_wght400_GRAD
 import horizontalRuleIcon from "../../assets/editor-icons/horizontal_rule_FILL0_wght400_GRAD0_opsz24.svg";
 import undoIcon from "../../assets/editor-icons/undo_FILL0_wght400_GRAD0_opsz24.svg";
 import redoIcon from "../../assets/editor-icons/redo_FILL0_wght400_GRAD0_opsz24.svg";
-import imageIcon from "../../assets/editor-icons/image_FILL0_wght400_GRAD0_opsz24.svg";
+import ImageUploadButton from "./ImageUploadButton";
 
 export default function MenuBar({ editor }: { editor: Editor | null }) {
   type Level = 1 | 2 | 3 | 4 | 5 | 6;
+
   function numberToLevel(num: number): Level {
     if (num > 0 && num < 7) {
       return num as Level;
@@ -21,20 +22,12 @@ export default function MenuBar({ editor }: { editor: Editor | null }) {
       return 1;
     }
   }
-
   const baseStyle = "p-2";
   const selectedStyle = "p-2 bg-blue-400 rounded-md";
 
   if (!editor) {
     return null;
   }
-
-  const addImage = () => {
-    const url = window.prompt("URL");
-    if (url) {
-      editor.chain().focus().setImage({ src: url }).run();
-    }
-  };
 
   function setHeaderLevel(value: Level) {
     if (!editor) return;
@@ -136,9 +129,7 @@ export default function MenuBar({ editor }: { editor: Editor | null }) {
       >
         <img src={redoIcon} />
       </button>
-      <button type="button" className={baseStyle} onClick={addImage}>
-        <img src={imageIcon} />
-      </button>
+      <ImageUploadButton editor={editor} />
     </div>
   );
 }
