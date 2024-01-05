@@ -3,6 +3,7 @@ import getTokenFromStorage from "../../utils/getTokenFromStorage";
 interface Post {
   title: string;
   body: string;
+  thumbnail: string;
 }
 
 export default async function createPost(post: Post) {

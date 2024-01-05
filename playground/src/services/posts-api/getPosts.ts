@@ -1,4 +1,4 @@
-import { Post } from "../../components/blog-feature/BlogPost";
+import { Post } from "../../components/blog-feature/BlogPostDetails";
 import { Pagination } from "../../pages/Blog";
 import getTokenFromStorage from "../../utils/getTokenFromStorage";
 

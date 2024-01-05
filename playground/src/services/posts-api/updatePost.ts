@@ -4,6 +4,7 @@ interface PostUpdate {
   title: string;
   body: string;
   uuid: string;
+  thumbnail: string;
 }
 
 export default async function updatePost(post: PostUpdate) {

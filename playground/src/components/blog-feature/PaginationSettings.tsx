@@ -1,14 +1,9 @@
-import { Pagination } from "../../pages/Blog";
 import Button from "../Button";
-
-interface Props {
-  setPagination: (pagination: Pagination) => void;
-  pagination: Pagination;
-}
+import { PaginationSettingsProps } from "./BlogTypes";
 
 const selectStyle = "bg-slate-50 border rounded-md px-2 py-1";
 
-function PaginationSettings({ pagination, setPagination }: Props) {
+function PaginationSettings({ pagination, setPagination }: PaginationSettingsProps) {
   return (
     <div className="w-full lg:fixed py-2 bg-slate-50 px-4 rounded-md border-slate-200 border lg:w-[15rem] xl:w-[20rem]">
       <div className="flex space-x-3 items-center justify-center">

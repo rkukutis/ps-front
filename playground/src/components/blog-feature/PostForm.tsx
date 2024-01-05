@@ -11,25 +11,18 @@ import MenuBar from "../editor-feature/MenuBar";
 import { Color } from "@tiptap/extension-color";
 import TextStyle from "@tiptap/extension-text-style";
 import Underline from "@tiptap/extension-underline";
+import { PostFormProps, PostFormsFields } from "./BlogTypes";
+import resizeImage from "../../utils/resizeImage";
 
-type Post = { title: string; body: string };
-
-interface Props {
-  closeForm: () => void;
-  initialFieldValues?: { body: string; title: string };
-  method?: string;
-  postId?: string;
-}
-
-export default function PostForm({ closeForm, initialFieldValues, method = "POST", postId }: Props) {
+export default function PostForm({ closeForm, initialFieldValues, method = "POST", postId }: PostFormProps) {
   const {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm<Post>();
+  } = useForm<PostFormsFields>();
   const queryClient = useQueryClient();
   const postMutation = useMutation({
-    mutationFn: (post: { title: string; body: string }) => createPost(post),
+    mutationFn: (post: { title: string; body: string; thumbnail: string }) => createPost(post),
     onError: (err) => toast.error(err.message),
     onSuccess: () => {
       closeForm();
@@ -38,7 +31,7 @@ export default function PostForm({ closeForm, initialFieldValues, method = "POST
     }
   });
   const updateMutation = useMutation({
-    mutationFn: (updatedPost: { title: string; body: string; uuid: string }) => updatePost(updatedPost),
+    mutationFn: (updatedPost: { title: string; body: string; uuid: string; thumbnail: string }) => updatePost(updatedPost),
     onError: (err) => toast.error(err.message),
     onSuccess: () => {
       toast.success("Post updated successfully!");
@@ -46,12 +39,16 @@ export default function PostForm({ closeForm, initialFieldValues, method = "POST
     }
   });
 
-  const onSubmit: SubmitHandler<Post> = (data) => {
+  const onSubmit: SubmitHandler<PostFormsFields> = async (data) => {
     if (!editor) return;
+    const image: File | null = data.thumbnail.item(0);
+    const imageBase64 = await resizeImage(image);
+    console.log(imageBase64);
+    if (imageBase64 == null) return;
     if (method === "PUT" && postId !== undefined) {
-      updateMutation.mutate({ title: data.title, body: editor?.getHTML(), uuid: postId });
+      updateMutation.mutate({ title: data.title, body: editor?.getHTML(), uuid: postId, thumbnail: imageBase64 });
     } else {
-      postMutation.mutate({ title: data.title, body: editor.getHTML() });
+      postMutation.mutate({ title: data.title, body: editor.getHTML(), thumbnail: imageBase64 });
     }
   };
 
@@ -73,6 +70,10 @@ export default function PostForm({ closeForm, initialFieldValues, method = "POST
           <label>Title</label>
           <input defaultValue={initialFieldValues?.title} className="w-full p-2 rounded-md" {...register("title", { required: true })} />
           {errors.title && <FormInlineError message="post title is required" />}
+        </div>
+        <div>
+          <label>Thumbnail</label>
+          <input type="file" {...register("thumbnail", { required: true })} />
         </div>
         <div className="flex flex-col space-y-2">
           <MenuBar editor={editor} />

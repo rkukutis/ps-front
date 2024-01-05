@@ -2,12 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import { useUserStore } from "../../stores/tokenStore";
 import { useState } from "react";
 import { ClipLoader } from "react-spinners";
-import { BlogPost, Post } from "./BlogPost";
 import { Pagination } from "../../pages/Blog";
 import PostForm from "./PostForm";
 import Button from "../Button";
 import getPosts from "../../services/posts-api/getPosts";
 import NoMorePosts from "./NoMorePosts";
+import { PostProps } from "./BlogTypes";
+import BlogPost from "./BlogPost";
+import { BlogPostDetails } from "./BlogPostDetails";
 
 export default function BlogPostContainer({ pagination }: { pagination: Pagination }) {
   const [postForm, setPostForm] = useState(false);
@@ -36,7 +38,7 @@ export default function BlogPostContainer({ pagination }: { pagination: Paginati
           {posts?.length === 0 ? (
             <NoMorePosts />
           ) : (
-            <div className="flex flex-col items-center">{posts?.map((post: Post) => <BlogPost post={post} key={post.uuid} />)}</div>
+            <div className="flex flex-col items-center">{posts?.map((post: PostProps) => <BlogPostDetails post={post} key={post.uuid} />)}</div>
           )}
         </div>
       )}
