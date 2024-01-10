@@ -1,25 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
 import { useUserStore } from "../../stores/tokenStore";
 import { useState } from "react";
 import { ClipLoader } from "react-spinners";
-import { Pagination } from "../../pages/Blog";
 import PostForm from "./PostForm";
 import Button from "../Button";
-import getPosts from "../../services/posts-api/getPosts";
 import NoMorePosts from "./NoMorePosts";
 import { PostProps } from "./BlogTypes";
 import BlogPost from "./BlogPost";
-import { BlogPostDetails } from "./BlogPostDetails";
 
-export default function BlogPostContainer({ pagination }: { pagination: Pagination }) {
+export default function BlogPostContainer({ posts, isFetching }: { posts: PostProps[] | undefined; isFetching: boolean }) {
   const [postForm, setPostForm] = useState(false);
-
-  const { data, isFetching } = useQuery({
-    queryKey: ["posts", pagination.page, pagination.limit, pagination.sortBy, pagination.sortDesc, pagination.contains],
-    queryFn: () => getPosts(pagination)
-  });
   const { token } = useUserStore();
-  const posts = data?.content;
 
   return (
     <div className="flex flex-col items-center w-full">
@@ -38,7 +28,7 @@ export default function BlogPostContainer({ pagination }: { pagination: Paginati
           {posts?.length === 0 ? (
             <NoMorePosts />
           ) : (
-            <div className="flex flex-col items-center">{posts?.map((post: PostProps) => <BlogPostDetails post={post} key={post.uuid} />)}</div>
+            <div className="flex flex-col items-center">{posts?.map((post: PostProps) => <BlogPost post={post} key={post.uuid} />)}</div>
           )}
         </div>
       )}
