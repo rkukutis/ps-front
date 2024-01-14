@@ -1,12 +1,5 @@
-import { Post } from "../../components/blog-feature/BlogPost";
+import { PostsAPIResponse } from "../../components/blog-feature/BlogTypes";
 import { Pagination } from "../../pages/Blog";
-import getTokenFromStorage from "../../utils/getTokenFromStorage";
-
-export interface GetPostsResponse {
-  content: Post[];
-  totalPages: number;
-  totalElements: number;
-}
 
 export default async function getPosts({
   page = 1,
@@ -14,7 +7,7 @@ export default async function getPosts({
   sortBy = "createdAt",
   sortDesc = "true",
   contains
-}: Pagination): Promise<GetPostsResponse | null> {
+}: Pagination): Promise<PostsAPIResponse> {
   const titleFilter = contains ? `&contains=${contains}` : "";
   const res = await fetch(
     `${import.meta.env.VITE_BACKEND_HOST}/posts?limit=${limit}&page=${page}&sortBy=${sortBy}&sortDesc=${sortDesc}${titleFilter}`,
@@ -24,8 +17,7 @@ export default async function getPosts({
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
       credentials: "same-origin", // include, *same-origin, omit
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${getTokenFromStorage()}`
+        "Content-Type": "application/json"
       },
       redirect: "follow", // manual, *follow, error
       referrerPolicy: "no-referrer"

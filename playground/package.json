@@ -21,6 +21,7 @@
     "@tiptap/react": "^2.1.13",
     "@tiptap/starter-kit": "^2.1.13",
     "dompurify": "^3.0.6",
+    "image-js": "^0.35.5",
     "react": "^18.2.0",
     "react-devtools": "^4.28.5",
     "react-dom": "^18.2.0",

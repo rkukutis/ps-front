@@ -2,11 +2,15 @@ import getTokenFromStorage from "../../utils/getTokenFromStorage";
 
 interface PostUpdate {
   title: string;
+  subtitle: string;
   body: string;
   uuid: string;
+  thumbnail?: string;
 }
 
 export default async function updatePost(post: PostUpdate) {
+  console.log(post);
+
   const res = await fetch(`${import.meta.env.VITE_BACKEND_HOST}/posts/${post.uuid}`, {
     method: "PUT",
     mode: "cors",

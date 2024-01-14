@@ -1,33 +1,25 @@
-import { useQuery } from "@tanstack/react-query";
 import { useUserStore } from "../../stores/tokenStore";
 import { useState } from "react";
 import { ClipLoader } from "react-spinners";
-import { BlogPost, Post } from "./BlogPost";
-import { Pagination } from "../../pages/Blog";
 import PostForm from "./PostForm";
 import Button from "../Button";
-import getPosts from "../../services/posts-api/getPosts";
 import NoMorePosts from "./NoMorePosts";
+import { PostProps } from "./BlogTypes";
+import BlogPost from "./BlogPost";
 
-export default function BlogPostContainer({ pagination }: { pagination: Pagination }) {
+export default function BlogPostContainer({ posts, isFetching }: { posts: PostProps[] | undefined; isFetching: boolean }) {
   const [postForm, setPostForm] = useState(false);
-
-  const { data, isFetching } = useQuery({
-    queryKey: ["posts", pagination.page, pagination.limit, pagination.sortBy, pagination.sortDesc, pagination.contains],
-    queryFn: () => getPosts(pagination)
-  });
   const { token } = useUserStore();
-  const posts = data?.content;
 
   return (
-    <div className="flex flex-col items-center w-full">
+    <div>
       {isFetching ? (
         <ClipLoader size={150} cssOverride={{ margin: "30vh" }} aria-label="Loading Spinner" data-testid="loader" />
       ) : (
-        <div className="w-full">
+        <div className="">
           {token && (
-            <div className="">
-              <Button extraStyle="w-full" type={postForm ? "danger" : "normal"} onclick={() => setPostForm(!postForm)}>
+            <div className="flex flex-col items-center">
+              <Button extraStyle="w-full my-2 py-5" type={postForm ? "danger" : "normal"} onclick={() => setPostForm(!postForm)}>
                 {postForm ? "Cancel" : "Create a new Post"}
               </Button>
               {postForm && <PostForm closeForm={() => setPostForm(false)} />}
@@ -36,7 +28,7 @@ export default function BlogPostContainer({ pagination }: { pagination: Paginati
           {posts?.length === 0 ? (
             <NoMorePosts />
           ) : (
-            <div className="flex flex-col items-center">{posts?.map((post: Post) => <BlogPost post={post} key={post.uuid} />)}</div>
+            <div className="flex flex-col items-center px-3">{posts?.map((post: PostProps) => <BlogPost post={post} key={post.uuid} />)}</div>
           )}
         </div>
       )}

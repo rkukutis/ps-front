@@ -1,7 +1,8 @@
 import { useState } from "react";
 import BlogPostContainer from "../components/blog-feature/BlogPostContainer";
 import PaginationSettings from "../components/blog-feature/PaginationSettings";
-// import { URLSearchParamsInit, useSearchParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import getPosts from "../services/posts-api/getPosts";
 
 export interface Pagination {
   page: number;
@@ -20,6 +21,11 @@ const defaultPagination: Pagination = {
 
 export default function Blog() {
   const [pagination, setPagination] = useState(defaultPagination);
+  const { data, isFetching } = useQuery({
+    queryKey: ["posts", pagination.page, pagination.limit, pagination.sortBy, pagination.sortDesc, pagination.contains],
+    queryFn: () => getPosts(pagination)
+  });
+
   // const [searchParams, setSearchParams] = useSearchParams();
 
   // useEffect(
@@ -37,14 +43,22 @@ export default function Blog() {
   //   },
   //   [pagination.page, pagination.limit, pagination.sortBy, pagination.sortDesc, pagination.contains, setSearchParams]
   // );
+  if (!data) return;
 
   return (
-    <div className="lg:grid grid-cols-12 flex flex-col py-2">
-      <div className="flex items-center justify-center lg:items-start lg:justify-end lg:col-span-3">
-        <PaginationSettings setPagination={setPagination} pagination={pagination} />
+    <div className="lg:grid grid-cols-12 flex flex-col">
+      <div className="flex items-center justify-center lg:items-start lg:justify-end lg:mt-24 lg:col-span-3">
+        <PaginationSettings
+          setPagination={setPagination}
+          pagination={pagination}
+          last={data.last}
+          first={data.first}
+          totalPages={data.totalPages}
+          totalElements={data.totalElements}
+        />
       </div>
       <div className="lg:col-span-6">
-        <BlogPostContainer pagination={pagination} />
+        <BlogPostContainer posts={data?.content} isFetching={isFetching} />
       </div>
     </div>
   );

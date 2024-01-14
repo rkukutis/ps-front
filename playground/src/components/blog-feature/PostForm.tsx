@@ -1,4 +1,5 @@
 import { SubmitHandler, useForm } from "react-hook-form";
+import addIcon from "../../assets/button-icons/add_circle_FILL0_wght400_GRAD0_opsz24.svg";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import createPost from "../../services/posts-api/createPost";
 import toast from "react-hot-toast";
@@ -11,25 +12,20 @@ import MenuBar from "../editor-feature/MenuBar";
 import { Color } from "@tiptap/extension-color";
 import TextStyle from "@tiptap/extension-text-style";
 import Underline from "@tiptap/extension-underline";
+import { PostFormProps, PostFormsFields } from "./BlogTypes";
+import { resizeThumbnail } from "../../utils/imageUtils";
+import { useNavigate } from "react-router-dom";
 
-type Post = { title: string; body: string };
-
-interface Props {
-  closeForm: () => void;
-  initialFieldValues?: { body: string; title: string };
-  method?: string;
-  postId?: string;
-}
-
-export default function PostForm({ closeForm, initialFieldValues, method = "POST", postId }: Props) {
+export default function PostForm({ closeForm, initialFieldValues, method = "POST", postId }: PostFormProps) {
   const {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm<Post>();
+  } = useForm<PostFormsFields>();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const postMutation = useMutation({
-    mutationFn: (post: { title: string; body: string }) => createPost(post),
+    mutationFn: (post: { title: string; subtitle: string; body: string; thumbnail: string }) => createPost(post),
     onError: (err) => toast.error(err.message),
     onSuccess: () => {
       closeForm();
@@ -38,20 +34,23 @@ export default function PostForm({ closeForm, initialFieldValues, method = "POST
     }
   });
   const updateMutation = useMutation({
-    mutationFn: (updatedPost: { title: string; body: string; uuid: string }) => updatePost(updatedPost),
+    mutationFn: (updatedPost: { title: string; subtitle: string; body: string; uuid: string; thumbnail: string }) => updatePost(updatedPost),
     onError: (err) => toast.error(err.message),
     onSuccess: () => {
       toast.success("Post updated successfully!");
       queryClient.invalidateQueries();
+      navigate("/blog");
     }
   });
 
-  const onSubmit: SubmitHandler<Post> = (data) => {
+  const onSubmit: SubmitHandler<PostFormsFields> = async (data) => {
     if (!editor) return;
+    const image: File | null = data.thumbnail.item(0);
+    const imageBase64 = await resizeThumbnail(image);
     if (method === "PUT" && postId !== undefined) {
-      updateMutation.mutate({ title: data.title, body: editor?.getHTML(), uuid: postId });
+      updateMutation.mutate({ title: data.title, subtitle: data.subtitle, body: editor?.getHTML(), uuid: postId, thumbnail: imageBase64 });
     } else {
-      postMutation.mutate({ title: data.title, body: editor.getHTML() });
+      postMutation.mutate({ title: data.title, subtitle: data.subtitle, body: editor.getHTML(), thumbnail: imageBase64 });
     }
   };
 
@@ -67,18 +66,43 @@ export default function PostForm({ closeForm, initialFieldValues, method = "POST
   });
 
   return (
-    <div className="flex flex-col items-center">
-      <form className="bg-slate-200 py-6 px-4 w-full flex flex-col space-y-2 rounded-md" onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-col">
+    <div className="flex flex-col items-center w-full">
+      <form className="bg-slate-200 py-6 px-4 flex flex-col space-y-2 rounded-md w-full" onSubmit={handleSubmit(onSubmit)}>
+        <section className="flex flex-col">
           <label>Title</label>
-          <input defaultValue={initialFieldValues?.title} className="w-full p-2 rounded-md" {...register("title", { required: true })} />
+          <textarea
+            defaultValue={initialFieldValues?.title}
+            className="w-full p-2 rounded-md"
+            {...register("title", { required: true, maxLength: { value: 50, message: "Title length must be less than 50 characters" } })}
+          />
           {errors.title && <FormInlineError message="post title is required" />}
-        </div>
-        <div className="flex flex-col space-y-2">
+        </section>
+        <section className="flex flex-col">
+          <label>Subtitle</label>
+          <textarea
+            defaultValue={initialFieldValues?.subtitle}
+            className="w-full p-2 rounded-md"
+            {...register("subtitle", { required: true, maxLength: { value: 200, message: "Subtitle length must be less than 200 characters" } })}
+          />
+          {errors.subtitle && <FormInlineError message="post subtitle is required" />}
+        </section>
+        <section className="self-center">
+          <label className="flex space-x-2" htmlFor="thumbnail-button">
+            <p>Add thumbnail</p>
+            <img src={addIcon} />
+          </label>
+          <input
+            className="text hidden"
+            id="thumbnail-button"
+            type="file"
+            {...register("thumbnail", { required: initialFieldValues ? false : true })}
+          />
+        </section>
+        <section className="flex flex-col space-y-2">
           <MenuBar editor={editor} />
           <EditorContent editor={editor} />
           {errors.body && <FormInlineError message="post body is required" />}
-        </div>
+        </section>
         <input className="w-full bg-blue-500 text-slate-50 py-2 rounded-md" type="submit" value="Submit" />
       </form>
     </div>

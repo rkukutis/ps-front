@@ -1,72 +1,31 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useUserStore } from "../../stores/tokenStore";
-import { deletePost } from "../../services/posts-api/deletePost";
-import Button from "../Button";
-import toast from "react-hot-toast";
-import { useState } from "react";
-import PostForm from "./PostForm";
+import { Link } from "react-router-dom";
 import formatDate from "../../utils/formatDate";
-import cleanHTML from "../../utils/cleanHTML";
+import articleIcon from "../../assets/button-icons/article_FILL0_wght400_GRAD0_opsz24.svg";
+import { PostProps } from "./BlogTypes";
 
-export interface Post {
-  uuid: string;
-  title: string;
-  body: string;
-  imageUrl: string;
-  createdAt: string;
-}
-
-export function BlogPost({ post }: { post: Post }) {
-  const [isEditing, setIsEditing] = useState(false);
-  const queryClient = useQueryClient();
-  const { token } = useUserStore();
-  const mutation = useMutation({
-    mutationFn: async (postId: string) => await deletePost(postId),
-    onError: (err) => toast.error(err.message),
-    onSuccess: () => {
-      toast.success("Post deleted successfully");
-      queryClient.invalidateQueries({ queryKey: ["posts"] });
-    }
-  });
-
+function BlogPost({ post }: { post: PostProps }) {
   return (
-    <div className="bg-slate-100 rounded-md flex flex-col space-y-3 w-full px-8 py-5 mb-2">
-      <h1 className="font-bold text-3xl">{post.title}</h1>
-      <div className="flex space-x-4">
-        <img className="h-14 rounded-md" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVWf_XChj3jCS7ZuA3r1ot387qWiKwQGpPpA&usqp=CAU" />
-        <div>
-          <h3>
-            Author: <b>rhoopoe</b>
-          </h3>
-          <h3>Posted: {formatDate(post.createdAt)}</h3>
+    <div className="lg:grid lg:grid-cols-12 w-full my-1 lg:px-3 border-2 border-slate-100 lg:py-3 bg-slate-50 rounded-md">
+      <div className="lg:col-span-2 flex justify-center w-full lg:flex-col lg:items-center">
+        <img className="rounded-md lg:h-4/5 lg:w-auto object-cover w-full h-[10rem]" src={post.thumbnail} />
+      </div>
+      <section className="col-span-9 lg:pr-2 px-3 py-3 flex flex-col space-y-2">
+        <h1 className="text text-md font-semibold text-blue-500 lg:text-2xl">{post.title}</h1>
+        <h2 className="text-md text-left lg:text-lg lg:visible text-slate-500">{post.subtitle}</h2>
+        <div className="flex justify-between lg:justify-start space-x-4 text-slate-500 font-semibold">
+          <h2 className="text-sm lg:text-lg">By: rhoopoe</h2>
+          <h3 className="text-sm lg:text-lg">Published: {formatDate(post.createdAt)}</h3>
         </div>
-      </div>
-      <div className="w-full flex flex-col items-center">
-        <div
-          className="prose max-w-none prose-img:rounded-md lg:prose-lg xl:prose-xl focus:outline-none bg-slate-50 py-4 px-4 rounded-md prose-img:mx-auto"
-          dangerouslySetInnerHTML={{ __html: cleanHTML(post.body) }}
-        />
-      </div>
-      {token && (
-        <>
-          <div className="col-span-2 flex w-full justify-center space-x-2 pt-3">
-            <Button extraStyle="w-full" onclick={() => mutation.mutate(post.uuid)} type="danger">
-              Delete
-            </Button>
-            <Button type={isEditing ? "danger" : "normal"} extraStyle="w-full" onclick={() => setIsEditing(!isEditing)}>
-              {isEditing ? "Cancel" : "Update"}
-            </Button>
-          </div>
-          {isEditing && (
-            <PostForm
-              postId={post.uuid}
-              method="PUT"
-              initialFieldValues={{ title: post.title, body: post.body }}
-              closeForm={() => setIsEditing(!isEditing)}
-            />
-          )}
-        </>
-      )}
+      </section>
+      <Link
+        className="bg-blue-500 py-3 w-full text-sm text-slate-50 font-semibold lg:rounded-md rounded-b-md flex lg:flex-col items-center justify-center"
+        to={`posts/${post.uuid}`}
+      >
+        Read <br className="lg:inline hidden" /> more
+        <img className="lg:h-16 lg:block hidden" src={articleIcon} />
+      </Link>
     </div>
   );
 }
+
+export default BlogPost;

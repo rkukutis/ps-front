@@ -1,27 +1,26 @@
-import { Pagination } from "../../pages/Blog";
 import Button from "../Button";
-
-interface Props {
-  setPagination: (pagination: Pagination) => void;
-  pagination: Pagination;
-}
+import { PaginationSettingsProps } from "./BlogTypes";
 
 const selectStyle = "bg-slate-50 border rounded-md px-2 py-1";
 
-function PaginationSettings({ pagination, setPagination }: Props) {
+function PaginationSettings({ pagination, setPagination, first, last, totalElements, totalPages }: PaginationSettingsProps) {
   return (
     <div className="w-full lg:fixed py-2 bg-slate-50 px-4 rounded-md border-slate-200 border lg:w-[15rem] xl:w-[20rem]">
       <div className="flex space-x-3 items-center justify-center">
         <Button
+          disabled={first}
           onclick={() => {
-            if (pagination.page === 1) return;
             setPagination({ ...pagination, page: pagination.page - 1 });
           }}
         >
           Back
         </Button>
-        <h1 className="font-bold text-xl">{pagination.page}</h1>
-        <Button onclick={() => setPagination({ ...pagination, page: pagination.page + 1 })}>Forward</Button>
+        <h1 className="font-bold text-xl">
+          {pagination.page} / {totalPages}
+        </h1>
+        <Button extraStyle="" disabled={last} onclick={() => setPagination({ ...pagination, page: pagination.page + 1 })}>
+          Forward
+        </Button>
       </div>
       <div className="flex flex-col space-y-4 py-4">
         <div className="flex flex-col">
