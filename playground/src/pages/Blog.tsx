@@ -46,15 +46,13 @@ export default function Blog() {
   if (!data) return;
 
   return (
-    <div className="lg:grid grid-cols-12 flex flex-col py-2">
-      <div className="flex items-center justify-center lg:items-start lg:justify-end lg:col-span-3">
+    <div className="lg:grid grid-cols-12 flex flex-col">
+      <div className="flex items-center justify-center lg:items-start lg:justify-end lg:mt-24 lg:col-span-3">
         <PaginationSettings
           setPagination={setPagination}
           pagination={pagination}
           last={data.last}
           first={data.first}
-          pageSize={data.size}
-          pageNumber={data.number}
           totalPages={data.totalPages}
           totalElements={data.totalElements}
         />

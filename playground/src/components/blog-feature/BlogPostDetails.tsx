@@ -72,7 +72,7 @@ export function BlogPostDetails() {
                   postId={post.uuid}
                   method="PUT"
                   closeForm={() => setIsEditing(!isEditing)}
-                  initialFieldValues={{ title: post.title, body: post.body }}
+                  initialFieldValues={{ title: post.title, subtitle: post.subtitle, body: post.body, thumbnail: post.thumbnail }}
                 />
               )}
             </>

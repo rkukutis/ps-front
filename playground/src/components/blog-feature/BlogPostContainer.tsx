@@ -12,14 +12,14 @@ export default function BlogPostContainer({ posts, isFetching }: { posts: PostPr
   const { token } = useUserStore();
 
   return (
-    <div className="flex flex-col items-center w-full">
+    <div>
       {isFetching ? (
         <ClipLoader size={150} cssOverride={{ margin: "30vh" }} aria-label="Loading Spinner" data-testid="loader" />
       ) : (
-        <div className="w-full">
+        <div className="">
           {token && (
-            <div className="">
-              <Button extraStyle="w-full" type={postForm ? "danger" : "normal"} onclick={() => setPostForm(!postForm)}>
+            <div className="flex flex-col items-center">
+              <Button extraStyle="w-full my-2 py-5" type={postForm ? "danger" : "normal"} onclick={() => setPostForm(!postForm)}>
                 {postForm ? "Cancel" : "Create a new Post"}
               </Button>
               {postForm && <PostForm closeForm={() => setPostForm(false)} />}
@@ -28,7 +28,7 @@ export default function BlogPostContainer({ posts, isFetching }: { posts: PostPr
           {posts?.length === 0 ? (
             <NoMorePosts />
           ) : (
-            <div className="flex flex-col items-center">{posts?.map((post: PostProps) => <BlogPost post={post} key={post.uuid} />)}</div>
+            <div className="flex flex-col items-center px-3">{posts?.map((post: PostProps) => <BlogPost post={post} key={post.uuid} />)}</div>
           )}
         </div>
       )}

@@ -2,6 +2,7 @@ import getTokenFromStorage from "../../utils/getTokenFromStorage";
 
 interface Post {
   title: string;
+  subtitle: string;
   body: string;
   thumbnail: string;
 }
