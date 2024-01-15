@@ -32,34 +32,14 @@ export function BlogPostDetails() {
   if (!post) return;
 
   return (
-    <div className="bg-slate-100 rounded-md flex flex-col space-y-3 w-full px-8 py-5 mb-2">
+    <div className="bg-slate-100 flex flex-col items-center">
       {isFetching ? (
         <ClipLoader />
       ) : (
-        <>
-          {" "}
-          <div className="flex space-x-4">
-            <h1 className="font-bold text-3xl">{post.title}</h1>
-            <img
-              className="h-14 rounded-md"
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVWf_XChj3jCS7ZuA3r1ot387qWiKwQGpPpA&usqp=CAU"
-            />
-            <div>
-              <h3>
-                Author: <b>rhoopoe</b>
-              </h3>
-              <h3>Posted: {formatDate(post.createdAt)}</h3>
-            </div>
-          </div>
-          <div className="w-full flex flex-col items-center">
-            <div
-              className="prose max-w-none prose-img:rounded-md lg:prose-lg xl:prose-xl focus:outline-none bg-slate-50 py-4 px-4 rounded-md prose-img:mx-auto"
-              dangerouslySetInnerHTML={{ __html: cleanHTML(post.body) }}
-            />
-          </div>
+        <article className="lg:w-1/2 px-4 py-2">
           {token && (
-            <>
-              <div className="col-span-2 flex w-full justify-center space-x-2 pt-3">
+            <section className="my-3">
+              <div className="col-span-2 flex w-full justify-center space-x-2">
                 <Button extraStyle="w-full" onclick={() => mutation.mutate(post.uuid)} type="danger">
                   Delete
                 </Button>
@@ -75,9 +55,32 @@ export function BlogPostDetails() {
                   initialFieldValues={{ title: post.title, subtitle: post.subtitle, body: post.body, thumbnail: post.thumbnail }}
                 />
               )}
-            </>
+            </section>
           )}
-        </>
+          {!isEditing && (
+            <section className="bg-slate-50 lg:p-4 lg:rounded-lg border-2 border-slate-100">
+              <h1 className="font-bold text-2xl">{post.title}</h1>
+              <div className="flex items-center space-x-3 py-2">
+                <img
+                  className="h-14 rounded-md"
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVWf_XChj3jCS7ZuA3r1ot387qWiKwQGpPpA&usqp=CAU"
+                />
+                <div className="flex flex-col">
+                  <h3>
+                    Author: <b>rhoopoe</b>
+                  </h3>
+                  <h3>Posted: {formatDate(post.createdAt)}</h3>
+                </div>
+              </div>
+              <div className="w-full flex flex-col items-center">
+                <div
+                  className="prose max-w-none rounded-md prose-img:rounded-md lg:prose-md xl:prose-lg focus:outline-none p-3 py-4rounded-md prose-img:mx-auto"
+                  dangerouslySetInnerHTML={{ __html: cleanHTML(post.body) }}
+                />
+              </div>
+            </section>
+          )}
+        </article>
       )}
     </div>
   );

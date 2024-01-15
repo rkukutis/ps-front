@@ -25,6 +25,8 @@ export default function Blog() {
     queryKey: ["posts", pagination.page, pagination.limit, pagination.sortBy, pagination.sortDesc, pagination.contains],
     queryFn: () => getPosts(pagination)
   });
+  if (!data) return;
+  const pageNotFull = data.numberOfElements < data.size;
 
   // const [searchParams, setSearchParams] = useSearchParams();
 
@@ -58,7 +60,7 @@ export default function Blog() {
         />
       </div>
       <div className="lg:col-span-6">
-        <BlogPostContainer posts={data?.content} isFetching={isFetching} />
+        <BlogPostContainer pageNotFull={pageNotFull} posts={data?.content} isFetching={isFetching} />
       </div>
     </div>
   );

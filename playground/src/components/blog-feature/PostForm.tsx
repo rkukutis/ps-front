@@ -68,23 +68,27 @@ export default function PostForm({ closeForm, initialFieldValues, method = "POST
   return (
     <div className="flex flex-col items-center w-full">
       <form className="bg-slate-200 py-6 px-4 flex flex-col space-y-2 rounded-md w-full" onSubmit={handleSubmit(onSubmit)}>
-        <section className="flex flex-col">
-          <label>Title</label>
+        <section className="flex flex-col space-y-2">
+          <label className="text-xl font-bold">Title</label>
           <textarea
             defaultValue={initialFieldValues?.title}
             className="w-full p-2 rounded-md"
             {...register("title", { required: true, maxLength: { value: 50, message: "Title length must be less than 50 characters" } })}
           />
-          {errors.title && <FormInlineError message="post title is required" />}
+          {errors.title && <FormInlineError message={errors.title.message || "Incorrect title form"} />}
         </section>
-        <section className="flex flex-col">
-          <label>Subtitle</label>
+        <section className="flex flex-col space-y-2">
+          <label className="text-xl font-bold">Subtitle</label>
           <textarea
             defaultValue={initialFieldValues?.subtitle}
             className="w-full p-2 rounded-md"
-            {...register("subtitle", { required: true, maxLength: { value: 200, message: "Subtitle length must be less than 200 characters" } })}
+            {...register("subtitle", {
+              required: true,
+              minLength: { value: 100, message: "subtitle must be at least 100 characters long" },
+              maxLength: { value: 200, message: "Subtitle length must be less than 200 characters" }
+            })}
           />
-          {errors.subtitle && <FormInlineError message="post subtitle is required" />}
+          {errors.subtitle && <FormInlineError message={errors.subtitle.message || "Incorrect subtitle form"} />}
         </section>
         <section className="self-center">
           <label className="flex space-x-2" htmlFor="thumbnail-button">
