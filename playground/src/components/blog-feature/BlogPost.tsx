@@ -9,9 +9,9 @@ function BlogPost({ post }: { post: PostProps }) {
       <div className="lg:col-span-2 flex justify-center w-full lg:flex-col lg:items-center">
         <img className="rounded-md lg:h-4/5 lg:w-auto object-cover w-full h-[10rem]" src={post.thumbnail} />
       </div>
-      <section className="col-span-9 lg:pr-2 px-3 py-3 flex flex-col space-y-2">
+      <section className="col-span-9 px-3 py-3 lg:pr-4 flex flex-col space-y-2">
         <h1 className="text text-md font-semibold text-blue-500 lg:text-2xl">{post.title}</h1>
-        <h2 className="text-md text-left lg:text-lg lg:visible text-slate-500">{post.subtitle}</h2>
+        <h2 className="text-md text-left lg:text-lg text-slate-500">{post.subtitle}</h2>
         <div className="flex justify-between lg:justify-start space-x-4 text-slate-500 font-semibold">
           <h2 className="text-sm lg:text-lg">By: rhoopoe</h2>
           <h3 className="text-sm lg:text-lg">Published: {formatDate(post.createdAt)}</h3>

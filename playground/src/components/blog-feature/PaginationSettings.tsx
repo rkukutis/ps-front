@@ -4,7 +4,7 @@ import { PaginationSettingsProps } from "./BlogTypes";
 
 const selectStyle = "bg-slate-50 border rounded-md px-2 py-1";
 
-function PaginationSettings({ pagination, setPagination, first, last, totalElements, totalPages }: PaginationSettingsProps) {
+function PaginationSettings({ pagination, setPagination, first, last, totalElements }: PaginationSettingsProps) {
   const [containsString, setContainsString] = useState("");
 
   function handleEnterPress(e: KeyboardEvent<HTMLInputElement>) {

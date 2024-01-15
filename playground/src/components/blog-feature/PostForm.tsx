@@ -1,5 +1,4 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import addIcon from "../../assets/button-icons/add_circle_FILL0_wght400_GRAD0_opsz24.svg";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import createPost from "../../services/posts-api/createPost";
 import toast from "react-hot-toast";
@@ -90,17 +89,11 @@ export default function PostForm({ closeForm, initialFieldValues, method = "POST
           />
           {errors.subtitle && <FormInlineError message={errors.subtitle.message || "Incorrect subtitle form"} />}
         </section>
-        <section className="self-center">
-          <label className="flex space-x-2" htmlFor="thumbnail-button">
-            <p>Add thumbnail</p>
-            <img src={addIcon} />
+        <section className="self-center flex space-x-3 items-center py-2">
+          <label className="" htmlFor="thumbnail-button">
+            <p className="inline">Add thumbnail</p>
           </label>
-          <input
-            className="text hidden"
-            id="thumbnail-button"
-            type="file"
-            {...register("thumbnail", { required: initialFieldValues ? false : true })}
-          />
+          <input className="text" id="thumbnail-button" type="file" {...register("thumbnail", { required: initialFieldValues ? false : true })} />
         </section>
         <section className="flex flex-col space-y-2">
           <MenuBar editor={editor} />

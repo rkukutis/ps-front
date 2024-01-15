@@ -10,18 +10,17 @@ export default function PageLayout() {
 
   function logout() {
     setToken("");
+    navigate("/about");
   }
 
   return (
     <>
-      <header className="py-9 bg-blue-400 flex justify-between px-4 items-center h-[10vh]">
+      <header className="py-9 bg-blue-400 flex justify-center px-4 items-center h-[10vh]">
         <NavigationBar />
-        {token ? (
-          <div className="flex items-center space-x-3">
+        {token && (
+          <div className="text absolute right-5">
             <Button onclick={logout}>Log out</Button>
           </div>
-        ) : (
-          <Button onclick={() => navigate("/login")}>Log in</Button>
         )}
       </header>
       <main className="min-h-[85vh]">
