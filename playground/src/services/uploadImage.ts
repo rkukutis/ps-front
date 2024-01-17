@@ -8,7 +8,7 @@ export default async function (image: File): Promise<string> {
     headers: { Authorization: `Bearer ${getTokenFromStorage()}` },
     body: formData
   });
-  if (res.status !== 200) {
+  if (res.status !== 201) {
     throw new Error();
   }
   const imagePath: string = await res.text();

@@ -20,7 +20,7 @@ export default async function updatePost(post: PostUpdate) {
     },
     body: JSON.stringify(post)
   });
-  if (res.status !== 202) {
+  if (res.status !== 200) {
     throw new Error("Could not update Post");
   }
 }

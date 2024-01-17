@@ -9,7 +9,7 @@ export async function deletePost(postId: string) {
       Authorization: `Bearer ${getTokenFromStorage()}`
     }
   });
-  if (res.status !== 200) {
+  if (res.status !== 204) {
     throw new Error("Could not delete message");
   }
 }
