@@ -14,6 +14,8 @@ import Underline from "@tiptap/extension-underline";
 import { PostFormProps, PostFormsFields } from "./BlogTypes";
 import { resizeThumbnail } from "../../utils/imageUtils";
 import { useNavigate } from "react-router-dom";
+import ThemeList from "./ThemeList";
+import { useState } from "react";
 
 export default function PostForm({ closeForm, initialFieldValues, method = "POST", postId }: PostFormProps) {
   const {
@@ -21,10 +23,14 @@ export default function PostForm({ closeForm, initialFieldValues, method = "POST
     handleSubmit,
     formState: { errors }
   } = useForm<PostFormsFields>();
+
+  const [themes, setPostThemes] = useState(initialFieldValues?.themes ?? []);
+
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+
   const postMutation = useMutation({
-    mutationFn: (post: { title: string; subtitle: string; body: string; thumbnail: string }) => createPost(post),
+    mutationFn: (post: { title: string; subtitle: string; themes: string[]; body: string; thumbnail: string }) => createPost(post),
     onError: (err) => toast.error(err.message),
     onSuccess: () => {
       closeForm();
@@ -33,7 +39,8 @@ export default function PostForm({ closeForm, initialFieldValues, method = "POST
     }
   });
   const updateMutation = useMutation({
-    mutationFn: (updatedPost: { title: string; subtitle: string; body: string; uuid: string; thumbnail: string }) => updatePost(updatedPost),
+    mutationFn: (updatedPost: { title: string; subtitle: string; body: string; themes: string[]; uuid: string; thumbnail: string }) =>
+      updatePost(updatedPost),
     onError: (err) => toast.error(err.message),
     onSuccess: () => {
       toast.success("Post updated successfully!");
@@ -47,9 +54,16 @@ export default function PostForm({ closeForm, initialFieldValues, method = "POST
     const image: File | null = data.thumbnail.item(0);
     const imageBase64 = await resizeThumbnail(image);
     if (method === "PUT" && postId !== undefined) {
-      updateMutation.mutate({ title: data.title, subtitle: data.subtitle, body: editor?.getHTML(), uuid: postId, thumbnail: imageBase64 });
+      updateMutation.mutate({
+        title: data.title,
+        subtitle: data.subtitle,
+        themes: themes,
+        body: editor?.getHTML(),
+        uuid: postId,
+        thumbnail: imageBase64
+      });
     } else {
-      postMutation.mutate({ title: data.title, subtitle: data.subtitle, body: editor.getHTML(), thumbnail: imageBase64 });
+      postMutation.mutate({ title: data.title, subtitle: data.subtitle, themes: themes, body: editor.getHTML(), thumbnail: imageBase64 });
     }
   };
 
@@ -94,6 +108,9 @@ export default function PostForm({ closeForm, initialFieldValues, method = "POST
             <p className="inline">Add thumbnail</p>
           </label>
           <input className="text" id="thumbnail-button" type="file" {...register("thumbnail", { required: initialFieldValues ? false : true })} />
+        </section>
+        <section>
+          <ThemeList themes={themes} setPostThemes={setPostThemes} />
         </section>
         <section className="flex flex-col space-y-2">
           <MenuBar editor={editor} />

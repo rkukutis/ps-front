@@ -4,9 +4,11 @@ export interface PostProps {
   uuid: string;
   title: string;
   subtitle: string;
+  themes: string[];
   body: string;
   thumbnail: string;
   createdAt: string;
+  modifiedAt: string;
 }
 
 export interface PaginationSettingsProps {
@@ -20,7 +22,7 @@ export interface PaginationSettingsProps {
 
 export interface PostFormProps {
   closeForm: () => void;
-  initialFieldValues?: { body: string; thumbnail: string; subtitle: string; title: string };
+  initialFieldValues?: { body: string; thumbnail: string; themes: string[]; subtitle: string; title: string };
   method?: string;
   postId?: string;
 }
@@ -28,6 +30,7 @@ export interface PostFormProps {
 export interface PostFormsFields {
   title: string;
   subtitle: string;
+  themes: string[];
   body: string;
   thumbnail: FileList;
 }
@@ -42,4 +45,10 @@ export interface PostsAPIResponse {
   number: number;
   numberOfElements: number;
   empty: boolean;
+}
+
+export interface PostTheme {
+  name: string;
+  color: string;
+  emoji: string;
 }

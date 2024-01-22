@@ -4,6 +4,7 @@ interface PostUpdate {
   title: string;
   subtitle: string;
   body: string;
+  themes: string[];
   uuid: string;
   thumbnail?: string;
 }

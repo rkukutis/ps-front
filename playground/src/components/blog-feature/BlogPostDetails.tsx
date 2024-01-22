@@ -27,7 +27,7 @@ export function BlogPostDetails() {
 
   const { data: post, isFetching } = useQuery({
     queryKey: ["post_details"],
-    queryFn: () => getPost(uuid || "sds")
+    queryFn: () => getPost(uuid)
   });
   if (!post) return;
 
@@ -52,7 +52,13 @@ export function BlogPostDetails() {
                   postId={post.uuid}
                   method="PUT"
                   closeForm={() => setIsEditing(!isEditing)}
-                  initialFieldValues={{ title: post.title, subtitle: post.subtitle, body: post.body, thumbnail: post.thumbnail }}
+                  initialFieldValues={{
+                    title: post.title,
+                    subtitle: post.subtitle,
+                    themes: post.themes.map((s) => s.toLowerCase()),
+                    body: post.body,
+                    thumbnail: post.thumbnail
+                  }}
                 />
               )}
             </section>

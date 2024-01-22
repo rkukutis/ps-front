@@ -1,6 +1,7 @@
 import { PostProps } from "../../components/blog-feature/BlogTypes";
 
-export default async function getPost(postUUID: string): Promise<PostProps | null> {
+export default async function getPost(postUUID: string | undefined): Promise<PostProps | null> {
+  if (!postUUID) return null;
   const res = await fetch(`${import.meta.env.VITE_BACKEND_HOST}/posts/${postUUID}`, {
     method: "GET", // *GET, POST, PUT, DELETE, etc.
     mode: "cors", // no-cors, *cors, same-origin
