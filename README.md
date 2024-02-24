@@ -1,1 +1,2 @@
-# react-ts-playground
+# Live version is available
+https://blog.rhoopoe.com/
